@@ -1,6 +1,8 @@
 const { mysql } = require("../../database/mysql");
 const Order = require("../../model/order");
 const Uuid = require("../../utils/uuid");
+const { getProduct } = require("../product");
+const { getSku } = require("../sku");
 
 async function newOrder({ ctx }) {
   let new_order_info = {};
@@ -10,6 +12,18 @@ async function newOrder({ ctx }) {
   order.id = new Uuid().uuid;
   order.created_date = new Date().getTime();
   order.updated_date = new Date().getTime();
+
+  // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
+  const product_id = order.product_id;
+  const sku_id = order.sku_id;
+
+  const { product_with_no_null } = await getProduct({ id: product_id });
+  order.name = product_with_no_null.name;
+
+  const { sku_with_no_null } = await getSku({ id: sku_id });
+  order.standard = sku_with_no_null.standard;
+  order.price = sku_with_no_null.price;
+  order.photo = sku_with_no_null.photo;
 
   const result = await mysql("order").insert(order.getData().order);
 
