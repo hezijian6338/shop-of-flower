@@ -1,0 +1,23 @@
+{
+  "name": "koa-shop",
+  "version": "1.0.0",
+  "description": "koa后台搭建 + mysql + restful",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "hezijian6338",
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "knex": "^0.20.8",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "mysql": "^2.18.1",
+    "uuid": "^3.4.0"
+  }
+}
