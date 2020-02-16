@@ -49,6 +49,23 @@ async function setOrder({ ctx, id }) {
   let order = new Order(update_order_info);
   order.updated_date = new Date().getTime();
 
+  // TODO: 检查更新信息字段中有没有更新到 product_id和 sku_id
+  if (order.product_id != null) {
+    const product_id = order.product_id;
+
+    const { product_with_no_null } = await getProduct({ id: product_id });
+    order.name = product_with_no_null.name;
+  }
+
+  if (order.sku_id != null) {
+    const sku_id = order.sku_id;
+
+    const { sku_with_no_null } = await getSku({ id: sku_id });
+    order.standard = sku_with_no_null.standard;
+    order.price = sku_with_no_null.price;
+    order.photo = sku_with_no_null.photo;
+  }
+
   const result = await mysql("order")
     .where({
       id: id

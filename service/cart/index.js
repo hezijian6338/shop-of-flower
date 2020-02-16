@@ -50,6 +50,23 @@ async function setCart({ ctx, id }) {
 
   cart.updated_date = new Date().getTime();
 
+  // TODO: 检查更新信息字段中有没有更新到 product_id和 sku_id
+  if (cart.product_id != null) {
+    const product_id = cart.product_id;
+
+    const { product_with_no_null } = await getProduct({ id: product_id });
+    cart.name = product_with_no_null.name;
+  }
+
+  if (cart.sku_id != null) {
+    const sku_id = cart.sku_id;
+
+    const { sku_with_no_null } = await getSku({ id: sku_id });
+    cart.standard = sku_with_no_null.standard;
+    cart.price = sku_with_no_null.price;
+    cart.photo = sku_with_no_null.photo;
+  }
+
   const result = await mysql("cart")
     .where({
       id: id
