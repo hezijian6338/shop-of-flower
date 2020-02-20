@@ -27,7 +27,7 @@ async function newCart({ ctx }) {
 
   const result = await mysql("cart").insert(cart.getData().cart);
 
-  return result[0] === 0;
+  return result[0] === 0 ? { result: true, id: cart.id } : { result: false };
 }
 
 async function getCart({ ctx, id }) {
