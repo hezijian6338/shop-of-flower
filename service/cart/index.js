@@ -6,45 +6,45 @@ const { getSku } = require('../sku');
 const { getUser } = require('../user');
 
 async function newCart({ ctx }) {
-  let new_cart_info = {};
-  new_cart_info = ctx.request.body;
+  let newCartInfo = {};
+  newCartInfo = ctx.request.body;
 
-  const cart = new Cart(new_cart_info);
+  const cart = new Cart(newCartInfo);
   cart.id = new Uuid().uuid;
   cart.created_date = new Date().getTime();
   cart.updated_date = new Date().getTime();
 
   // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
-  const { product_id } = cart;
-  const { sku_id } = cart;
+  const { productId } = cart;
+  const { skuId } = cart;
 
-  const { product_with_no_null } = await getProduct({ id: product_id });
-  cart.name = product_with_no_null.name;
+  const { productWithNoNull } = await getProduct({ id: productId });
+  cart.name = productWithNoNull.name;
 
-  const { sku_with_no_null } = await getSku({ id: sku_id });
-  cart.standard = sku_with_no_null.standard;
-  cart.price = sku_with_no_null.price;
-  cart.photo = sku_with_no_null.photo;
+  const { skuWithNoNull } = await getSku({ id: skuId });
+  cart.standard = skuWithNoNull.standard;
+  cart.price = skuWithNoNull.price;
+  cart.photo = skuWithNoNull.photo;
 
   const result = await mysql('cart').insert(cart.getData().cart);
 
   return result[0] === 0 ? { result: true, id: cart.id } : { result: false };
 }
 
-async function getCart({ ctx, id }) {
-  const cart_info = await mysql('cart')
+async function getCart({ id }) {
+  const cartInfo = await mysql('cart')
     .where({
       id,
     })
     .select();
 
-  const cart = new Cart(cart_info[0]);
+  const cart = new Cart(cartInfo[0]);
 
   return cart.getData();
 }
 
 // TODO: 根据用户查询该用户的购物车列表
-async function getCarts({ ctx, userId }) {
+async function getCarts({ userId }) {
   // TODO: 查询用户信息, 得出用户的购物车列表
   const { user } = getUser(userId);
   // 取订单列表为数组
@@ -52,9 +52,9 @@ async function getCarts({ ctx, userId }) {
 
   // TODO: 构建购物车列表详细信息
   const carts = Array;
-  for (const cartId of cartIds) {
+  await cartIds.array.forEach((cartId) => {
     // 一个一个购物车 id查询
-    const cartInfo = await mysql('cart')
+    const cartInfo = mysql('cart')
       .where({
         id: cartId,
       })
@@ -62,7 +62,7 @@ async function getCarts({ ctx, userId }) {
 
     // 插入数组列表中
     carts.push(cartInfo[0]);
-  }
+  });
 
   return carts;
 }
@@ -101,7 +101,7 @@ async function setCart({ ctx, id }) {
   return result === 1;
 }
 
-async function delCart({ ctx, id }) {
+async function delCart({ id }) {
   const result = await mysql('cart')
     .where({
       id,
