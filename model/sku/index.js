@@ -1,8 +1,8 @@
 class Sku {
   constructor({
-    id, standard, price, photo, created_date, updated_date,
+    id, standard, price, photo, createdDate, updatedDate,
   }) {
-    this._sku = {
+    this.sku = {
       id: String,
       standard: String,
       price: Number,
@@ -10,68 +10,71 @@ class Sku {
       created_date: String,
       updated_date: String,
     };
-    this._sku.id = id;
-    this._sku.standard = standard;
-    this._sku.price = price;
-    this._sku.photo = photo;
-    this._sku.created_date = created_date;
-    this._sku.updated_date = updated_date;
+    this.sku.id = id;
+    this.sku.standard = standard;
+    this.sku.price = price;
+    this.sku.photo = photo;
+    this.sku.created_date = createdDate;
+    this.sku.updated_date = updatedDate;
   }
 
   getData() {
-    const sku = this._sku;
-    const sku_with_no_null = { ...this._sku };
+    const { sku } = this;
+    const skuWithNoNull = { ...this.sku };
 
-    const properties = Object.getOwnPropertyNames(this._sku);
-    for (const property of properties) {
-      if (Reflect.get(this._sku, property) == null) { Reflect.deleteProperty(sku_with_no_null, property); }
-    }
+    const properties = Object.getOwnPropertyNames(this.sku);
 
-    return { sku, sku_with_no_null };
+    properties.forEach((property) => {
+      if (Reflect.get(this.sku, property) == null) {
+        Reflect.deleteProperty(skuWithNoNull, property);
+      }
+    });
+
+    return { sku, skuWithNoNull };
   }
 
   get id() {
-    return this._sku.id == undefined ? null : this._sku.id;
+    return this.sku.id === undefined ? null : this.sku.id;
   }
 
   set id(value) {
-    this._sku.id = value;
+    this.sku.id = value;
   }
 
   get price() {
-    return this._sku.price == undefined ? null : this._sku.price;
+    return this.sku.price === undefined ? null : this.sku.price;
   }
 
   set price(value) {
-    this._sku.price = value;
+    this.sku.price = value;
   }
 
   get photo() {
-    return this._sku.photo == undefined ? null : this._sku.photo;
+    return this.sku.photo === undefined ? null : this.sku.photo;
   }
 
   set photo(value) {
-    this._sku.photo = value;
+    this.sku.photo = value;
   }
 
-  get created_date() {
-    return this._sku.created_date == undefined
+  get createdDate() {
+    return this.sku.created_date === undefined
       ? null
-      : this._sku.created_date;
+      : this.sku.created_date;
   }
 
-  set created_date(value) {
-    this._sku.created_date = value;
+  set createdDate(value) {
+    this.sku.created_date = value;
   }
 
-  get updated_date() {
-    return this._sku.updated_date == undefined
+  get updatedDate() {
+    return this.sku.updated_date === undefined
       ? null
-      : this._sku.updated_date;
+      : this.sku.updated_date;
   }
 
-  set updated_date(value) {
-    this._sku.updated_date = value;
+  set updatedDate(value) {
+    this.sku.updated_date = value;
   }
 }
 
