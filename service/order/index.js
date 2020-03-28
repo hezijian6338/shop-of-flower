@@ -27,7 +27,7 @@ async function newOrder({ ctx }) {
 
   const result = await mysql("order").insert(order.getData().order);
 
-  return result[0] === 0;
+  return result[0] === 0 ? { result: true, id: order.id } : { result: false };
 }
 
 async function getOrder({ ctx, id }) {

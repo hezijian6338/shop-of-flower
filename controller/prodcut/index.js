@@ -73,4 +73,16 @@ async function _delProduct(ctx) {
   ctx.body = body.getData();
 }
 
-module.exports = { _newProduct, _getProduct, _setProduct, _delProduct };
+async function _getProducts(ctx) {
+  const products = await service.getProducts({ ctx })
+
+  // 回应体抽离对象实现
+  let body = new Response();
+  body.SUCCESS = 200;
+  body.DATA = products;
+
+  // 返回信息到回应体
+  ctx.body = body.getData();
+}
+
+module.exports = { _newProduct, _getProduct, _setProduct, _delProduct, _getProducts };

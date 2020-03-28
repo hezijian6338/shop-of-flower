@@ -9,7 +9,7 @@ const Router = require("koa-router");
 
 // 首页路由
 const index = new Router();
-index.get("/index", async ctx => {});
+index.get("/index", async ctx => { });
 
 // 个人信息页面路由
 const user = new Router();
@@ -27,6 +27,8 @@ user.del("/user/:id", _user._delUser);
 // 商品详情路由
 const product = new Router();
 // 主页详情 (路径参数传递)
+product.get("/product/list", _product._getProducts);
+// 根据 id获取商品信息
 product.get("/product/:id", _product._getProduct);
 product.put("/product/:id", _product._setProduct);
 // product = { all }
@@ -60,8 +62,8 @@ order.delete("/order/:id", _order._delOrder);
 // 付款路由
 const pay = new Router();
 // 微信付款路由
-pay.get("/pay/wechat", async ctx => {});
+pay.get("/pay/wechat", async ctx => { });
 // 支付宝付款路由
-pay.get("/pay/alipay", async ctx => {});
+pay.get("/pay/alipay", async ctx => { });
 
 module.exports = { index, user, product, pay, sku, cart, order };

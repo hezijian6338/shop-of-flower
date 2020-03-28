@@ -95,4 +95,15 @@ async function delProduct({ ctx, id }) {
   return result === 1;
 }
 
-module.exports = { getProduct, setProduct, delProduct, newProduct };
+// TODO: 查询所有的商品信息
+async function getProducts({ ctx }) {
+  const result = await mysql("product").select();
+  let products = Array;
+  for (let product of result) {
+    products.push(product);
+  }
+
+  return products;
+}
+
+module.exports = { getProduct, setProduct, delProduct, newProduct, getProducts };
