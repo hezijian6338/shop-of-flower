@@ -34,7 +34,7 @@ async function newUser(ctx) {
   // FIXME: 新增信息需要添加一个判断, 当前没正式数据, 先 hold住
   const result = await service.newUser({ ctx });
 
-  console.log(result);
+  // console.log(result);
 
   const response = new Response();
   if (result) {

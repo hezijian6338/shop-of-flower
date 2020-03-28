@@ -1,12 +1,12 @@
-const uuid = require("uuid");
+const uuid = require('uuid');
 
 class Uuid {
   constructor() {
-    let id = uuid.v4();
+    const id = uuid.v4();
     this.uuid = '';
-    for (let item of id.split("-")) {
-      this.uuid = this.uuid + item;
-    }
+    id.split('-').forEach((item) => {
+      this.uuid += item;
+    });
     return this.uuid;
   }
 }
