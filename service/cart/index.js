@@ -68,28 +68,28 @@ async function getCarts({ userId }) {
 }
 
 async function setCart({ ctx, id }) {
-  let update_cart_info = {};
-  update_cart_info = ctx.request.body;
+  let updateCartInfo = {};
+  updateCartInfo = ctx.request.body;
 
-  const cart = new Cart(update_cart_info);
+  const cart = new Cart(updateCartInfo);
 
   cart.updated_date = new Date().getTime();
 
   // TODO: 检查更新信息字段中有没有更新到 product_id和 sku_id
   if (cart.product_id != null) {
-    const { product_id } = cart;
+    const { productId } = cart;
 
-    const { product_with_no_null } = await getProduct({ id: product_id });
-    cart.name = product_with_no_null.name;
+    const { productWithNoNull } = await getProduct({ id: productId });
+    cart.name = productWithNoNull.name;
   }
 
   if (cart.sku_id != null) {
-    const { sku_id } = cart;
+    const { skuId } = cart;
 
-    const { sku_with_no_null } = await getSku({ id: sku_id });
-    cart.standard = sku_with_no_null.standard;
-    cart.price = sku_with_no_null.price;
-    cart.photo = sku_with_no_null.photo;
+    const { skuWithNoNull } = await getSku({ id: skuId });
+    cart.standard = skuWithNoNull.standard;
+    cart.price = skuWithNoNull.price;
+    cart.photo = skuWithNoNull.photo;
   }
 
   const result = await mysql('cart')

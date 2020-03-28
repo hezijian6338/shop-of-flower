@@ -6,44 +6,44 @@ const { getSku } = require('../sku');
 const { getUser } = require('../user');
 
 async function newOrder({ ctx }) {
-  let new_order_info = {};
-  new_order_info = ctx.request.body;
+  let newOrderInfo = {};
+  newOrderInfo = ctx.request.body;
 
-  const order = new Order(new_order_info);
+  const order = new Order(newOrderInfo);
   order.id = new Uuid().uuid;
   order.created_date = new Date().getTime();
   order.updated_date = new Date().getTime();
 
   // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
-  const { product_id } = order;
-  const { sku_id } = order;
+  const { productId } = order;
+  const { skuId } = order;
 
-  const { product_with_no_null } = await getProduct({ id: product_id });
-  order.name = product_with_no_null.name;
+  const { productWithNoNull } = await getProduct({ id: productId });
+  order.name = productWithNoNull.name;
 
-  const { sku_with_no_null } = await getSku({ id: sku_id });
-  order.standard = sku_with_no_null.standard;
-  order.price = sku_with_no_null.price;
-  order.photo = sku_with_no_null.photo;
+  const { skuWithNoNull } = await getSku({ id: skuId });
+  order.standard = skuWithNoNull.standard;
+  order.price = skuWithNoNull.price;
+  order.photo = skuWithNoNull.photo;
 
   const result = await mysql('order').insert(order.getData().order);
 
   return result[0] === 0 ? { result: true, id: order.id } : { result: false };
 }
 
-async function getOrder({ ctx, id }) {
-  const order_info = await mysql('order')
+async function getOrder({ id }) {
+  const orderInfo = await mysql('order')
     .where({
       id,
     })
     .select();
 
-  const order = new Order(order_info[0]);
+  const order = new Order(orderInfo[0]);
 
   return order.getData();
 }
 
-async function getOrders({ ctx, userId }) {
+async function getOrders({ userId }) {
   // TODO: 查询用户信息, 得出用户的订单列表
   const { user } = getUser(userId);
   // 取订单列表为数组
@@ -51,43 +51,43 @@ async function getOrders({ ctx, userId }) {
 
   // TODO: 构建订单列表详细信息
   const orders = Array;
-  for (const orderId of orderIds) {
+  await orderIds.array.forEach((orderId) => {
     // 一个一个订单 id查询
-    const order_info = await mysql('order')
+    const orderInfo = mysql('order')
       .where({
         id: orderId,
       })
       .select();
 
     // 插入数组列表中
-    orders.push(order_info[0]);
-  }
+    orders.push(orderInfo[0]);
+  });
 
   return orders;
 }
 
 async function setOrder({ ctx, id }) {
-  let update_order_info = {};
-  update_order_info = ctx.request.body;
+  let updateOrderInfo = {};
+  updateOrderInfo = ctx.request.body;
 
-  const order = new Order(update_order_info);
+  const order = new Order(updateOrderInfo);
   order.updated_date = new Date().getTime();
 
   // TODO: 检查更新信息字段中有没有更新到 product_id和 sku_id
   if (order.product_id != null) {
-    const { product_id } = order;
+    const { productId } = order;
 
-    const { product_with_no_null } = await getProduct({ id: product_id });
-    order.name = product_with_no_null.name;
+    const { productWithNoNull } = await getProduct({ id: productId });
+    order.name = productWithNoNull.name;
   }
 
   if (order.sku_id != null) {
-    const { sku_id } = order;
+    const { skuId } = order;
 
-    const { sku_with_no_null } = await getSku({ id: sku_id });
-    order.standard = sku_with_no_null.standard;
-    order.price = sku_with_no_null.price;
-    order.photo = sku_with_no_null.photo;
+    const { skuWithNoNull } = await getSku({ id: skuId });
+    order.standard = skuWithNoNull.standard;
+    order.price = skuWithNoNull.price;
+    order.photo = skuWithNoNull.photo;
   }
 
   const result = await mysql('order')
@@ -99,12 +99,12 @@ async function setOrder({ ctx, id }) {
   return result === 1;
 }
 
-async function delOrder({ ctx, id }) {
+async function delOrder({ id }) {
   const result = await mysql('order')
     .where({ id })
     .del();
 
-  console.log(result);
+  // console.log(result);
 
   return result === 1;
 }
