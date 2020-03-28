@@ -1,17 +1,17 @@
 class Order {
   constructor({
     id,
-    product_id,
+    productId,
     name,
-    sku_id,
+    skuId,
     standard,
     price,
     photo,
     state,
-    created_date,
-    updated_date,
+    createdDate,
+    updatedDate,
   }) {
-    this._order = {
+    this.order = {
       id: String,
       product_id: String,
       name: String,
@@ -23,112 +23,115 @@ class Order {
       created_date: String,
       updated_date: String,
     };
-    this._order.id = id;
-    this._order.product_id = product_id;
-    this._order.name = name;
-    this._order.sku_id = sku_id;
-    this._order.standard = standard;
-    this._order.price = price;
-    this._order.photo = photo;
-    this._order.state = state;
-    this._order.created_date = created_date;
-    this._order.updated_date = updated_date;
+    this.order.id = id;
+    this.order.product_id = productId;
+    this.order.name = name;
+    this.order.sku_id = skuId;
+    this.order.standard = standard;
+    this.order.price = price;
+    this.order.photo = photo;
+    this.order.state = state;
+    this.order.created_date = createdDate;
+    this.order.updated_date = updatedDate;
   }
 
   getData() {
-    const order = this._order;
-    const order_with_no_null = { ...this._order };
+    const { order } = this;
+    const orderWithNoNull = { ...this.order };
 
-    const properties = Object.getOwnPropertyNames(this._order);
-    for (const property of properties) {
-      if (Reflect.get(this._order, property) == null) { Reflect.deleteProperty(order_with_no_null, property); }
-    }
+    const properties = Object.getOwnPropertyNames(this.order);
 
-    return { order, order_with_no_null };
+    properties.forEach((property) => {
+      if (Reflect.get(this.order, property) == null) {
+        Reflect.deleteProperty(orderWithNoNull, property);
+      }
+    });
+
+    return { order, orderWithNoNull };
   }
 
   get id() {
-    return this._order.id == undefined ? null : this._order.id;
+    return this.order.id === undefined ? null : this.order.id;
   }
 
   set id(value) {
-    this._order.id = value;
+    this.order.id = value;
   }
 
-  get product_id() {
-    return this._order.product_id == undefined ? null : this._order.product_id;
+  get productId() {
+    return this.order.product_id === undefined ? null : this.order.product_id;
   }
 
-  set product_id(value) {
-    this._order.product_id = value;
+  set productId(value) {
+    this.order.product_id = value;
   }
 
   get name() {
-    return this._order.name == undefined ? null : this._order.name;
+    return this.order.name === undefined ? null : this.order.name;
   }
 
   set name(value) {
-    this._order.name = value;
+    this.order.name = value;
   }
 
-  get sku_id() {
-    return this._order.sku_id == undefined ? null : this._order.sku_id;
+  get skuId() {
+    return this.order.sku_id === undefined ? null : this.order.sku_id;
   }
 
-  set sku_id(value) {
-    this._order.sku_id = this._order.sku_id;
+  set skuId(value) {
+    this.order.sku_id = this.order.skuId;
   }
 
   get standard() {
-    return this._order.standard == undefined ? null : this._order.standard;
+    return this.order.standard === undefined ? null : this.order.standard;
   }
 
   set standard(value) {
-    this._order.standard = value;
+    this.order.standard = value;
   }
 
   get price() {
-    return this._order.price == undefined ? null : this._order.price;
+    return this.order.price === undefined ? null : this.order.price;
   }
 
   set price(value) {
-    this._order.price = value;
+    this.order.price = value;
   }
 
   get photo() {
-    return this._order.photo == undefined ? null : this._order.photo;
+    return this.order.photo === undefined ? null : this.order.photo;
   }
 
   set photo(value) {
-    this._order.photo = value;
+    this.order.photo = value;
   }
 
   get state() {
-    return this._order.state == undefined ? null : this._order.state;
+    return this.order.state === undefined ? null : this.order.state;
   }
 
   set state(value) {
-    this._order.state = value;
+    this.order.state = value;
   }
 
-  get created_date() {
-    return this._order.created_date == undefined
+  get createdDate() {
+    return this.order.created_date === undefined
       ? null
-      : this._order.created_date;
+      : this.order.created_date;
   }
 
-  set created_date(value) {
-    this._order.created_date = value;
+  set createdDate(value) {
+    this.order.created_date = value;
   }
 
-  get updated_date() {
-    return this._order.updated_date == undefined
+  get updatedDate() {
+    return this.order.updated_date === undefined
       ? null
-      : this._order.updated_date;
+      : this.order.updated_date;
   }
 
-  set updated_date(value) {
-    this._order.updated_date = value;
+  set updatedDate(value) {
+    this.order.updated_date = value;
   }
 }
 
