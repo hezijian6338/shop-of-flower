@@ -5,12 +5,12 @@ class User {
     password,
     name,
     role,
-    order_ids,
-    cart_ids,
-    created_date,
-    updated_date,
+    orderIds,
+    cartIds,
+    createdDate,
+    updatedDate,
   }) {
-    this._user = {
+    this.user = {
       id: String,
       phone: String,
       password: String,
@@ -21,95 +21,98 @@ class User {
       created_date: String,
       updated_date: String,
     };
-    this._user.id = id;
-    this._user.phone = phone;
-    this._user.password = password;
-    this._user.name = name;
-    this._user.role = role;
-    this._user.order_ids = order_ids;
-    this._user.cart_ids = cart_ids;
-    this._user.created_date = created_date;
-    this._user.updated_date = updated_date;
+    this.user.id = id;
+    this.user.phone = phone;
+    this.user.password = password;
+    this.user.name = name;
+    this.user.role = role;
+    this.user.order_ids = orderIds;
+    this.user.cart_ids = cartIds;
+    this.user.created_date = createdDate;
+    this.user.updated_date = updatedDate;
   }
 
   getData() {
-    const user = this._user;
-    const user_with_no_null = { ...this._user };
+    const { user } = this;
+    const userWithNoNull = { ...this.user };
 
-    const properties = Object.getOwnPropertyNames(this._user);
-    for (const property of properties) {
-      if (Reflect.get(this._user, property) == null) { Reflect.deleteProperty(user_with_no_null, property); }
-    }
+    const properties = Object.getOwnPropertyNames(this.user);
 
-    return { user, user_with_no_null };
+    properties.forEach((property) => {
+      if (Reflect.get(this.user, property) == null) {
+        Reflect.deleteProperty(userWithNoNull, property);
+      }
+    });
+
+    return { user, userWithNoNull };
   }
 
   get id() {
-    return this._user.id == undefined ? null : this._user.id;
+    return this.user.id === undefined ? null : this.user.id;
   }
 
   set id(value) {
-    this._user.id = value;
+    this.user.id = value;
   }
 
   get password() {
-    return this._user.password == undefined ? null : this._user.password;
+    return this.user.password === undefined ? null : this.user.password;
   }
 
   set password(value) {
-    this._user.password = value;
+    this.user.password = value;
   }
 
   get phone() {
-    return this._user.phone == undefined ? null : this._user.phone;
+    return this.user.phone === undefined ? null : this.user.phone;
   }
 
   set phone(value) {
-    this._user.phone = value;
+    this.user.phone = value;
   }
 
   get role() {
-    return this._user.role == undefined ? null : this._user.role;
+    return this.user.role === undefined ? null : this.user.role;
   }
 
   set role(value) {
-    this._user.role = value;
+    this.user.role = value;
   }
 
-  get order_ids() {
-    return this._user.order_ids == undefined ? null : this._user.order_ids;
+  get orderIds() {
+    return this.user.order_ids === undefined ? null : this.user.order_ids;
   }
 
-  set order_ids(value) {
-    this._user.order_ids = value;
+  set orderIds(value) {
+    this.user.order_ids = value;
   }
 
-  get cart_ids() {
-    return this._user.cart_ids == undefined ? null : this._user.cart_ids;
+  get cartIds() {
+    return this.user.cart_ids === undefined ? null : this.user.cart_ids;
   }
 
-  set cart_ids(value) {
-    this._user.cart_ids = value;
+  set cartIds(value) {
+    this.user.cart_ids = value;
   }
 
-  get created_date() {
-    return this._user.created_date == undefined
+  get createdDate() {
+    return this.user.created_date === undefined
       ? null
-      : this._user.created_date;
+      : this.user.created_date;
   }
 
-  set created_date(value) {
-    this._user.created_date = value;
+  set createdDate(value) {
+    this.user.created_date = value;
   }
 
-  get updated_date() {
-    return this._user.updated_date == undefined
+  get updatedDate() {
+    return this.user.updated_date === undefined
       ? null
-      : this._user.updated_date;
+      : this.user.updated_date;
   }
 
-  set updated_date(value) {
-    this._user.updated_date = value;
+  set updatedDate(value) {
+    this.user.updated_date = value;
   }
 }
 
