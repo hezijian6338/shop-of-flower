@@ -33,7 +33,7 @@ class Cart {
   }
 
   getData() {
-    const { cart } = this.cart;
+    const { cart } = this;
 
     const cartWithNoNull = { ...this.cart };
 

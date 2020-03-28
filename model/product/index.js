@@ -2,44 +2,44 @@
 class Product {
   constructor({
     id,
-    product_id,
+    productId,
     name,
     brief,
     content,
-    sku_ids,
+    skuIds,
     photo,
-    created_date,
-    updated_date,
+    createdDate,
+    updatedDate,
   }) {
-    this._id = id;
-    this._product_id = product_id;
-    this._name = name;
-    this._brief = brief;
-    this._content = content;
-    this._sku_ids = sku_ids;
-    this._photo = photo;
-    this._created_date = created_date;
-    this._updated_date = updated_date;
-  }
-
-  getData() {
-    const product = {
-      id: this.id,
-      product_id: this.product_id,
-      name: this.name,
-      brief: this.brief,
-      content: this.content,
-      sku_ids: this.sku_ids,
-      photo: this.photo,
+    this.product = {
+      id: String,
+      product_id: String,
+      name: String,
+      brief: String,
+      content: String,
+      sku_ids: String,
+      photo: String,
       created_date: String,
       updated_date: String,
     };
+    this.product.id = id;
+    this.product.product_id = productId;
+    this.product.name = name;
+    this.product.brief = brief;
+    this.product.content = content;
+    this.product.sku_ids = skuIds;
+    this.product.photo = photo;
+    this.product.created_date = createdDate;
+    this.product.updated_date = updatedDate;
+  }
 
+  getData() {
+    const { product } = this;
     // 输出对象中拥有的自身属性
     // console.log(Object.getOwnPropertyNames(product));
 
     // 深层次复制
-    const product_with_no_null = { ...product };
+    const productWithNoNull = { ...this.product };
     // let product_with_no_null = { ...product };
 
     // 浅层次复制, 只复制了引用地址, 两对象的值会联动修改
@@ -49,91 +49,91 @@ class Product {
     const propertys = Object.getOwnPropertyNames(product);
 
     // 遍历数组内容, 对新复制的数组中为 null值得进行剔除... 返回一个无空值的结果对象
-    for (const property of propertys) {
+    propertys.forEach((property) => {
       if (Reflect.get(product, property) == null) {
-        Reflect.deleteProperty(product_with_no_null, property);
+        Reflect.deleteProperty(productWithNoNull, property);
       }
-    }
+    });
 
     // console.log(product_with_no_null);
     // console.log(product);
 
-    return { product, product_with_no_null };
+    return { product, productWithNoNull };
   }
 
   // 以下是配置对象实例属性的 getter/setter方法
 
   get id() {
-    return this._id == undefined ? null : this._id;
+    return this.product.id === undefined ? null : this.product.id;
   }
 
   set id(value) {
-    this._id = value;
+    this.product.id = value;
   }
 
-  get product_id() {
-    return this._product_id == undefined ? null : this._product_id;
+  get productId() {
+    return this.product.product_id === undefined ? null : this.product.product_id;
   }
 
-  set product_id(value) {
-    this._product_id = value;
-    console.log(`product_id:${value}`);
+  set productId(value) {
+    this.product.product_id = value;
+    // console.log(`product_id:${value}`);
   }
 
   get name() {
-    return this._name == undefined ? null : this._name;
+    return this.product.name === undefined ? null : this.product.name;
   }
 
   set name(value) {
-    this._name = value;
+    this.product.name = value;
   }
 
   get brief() {
-    return this._brief == undefined ? null : this._brief;
+    return this.product.brief === undefined ? null : this.product.brief;
   }
 
   set brief(value) {
-    this._brief = value;
+    this.product.brief = value;
   }
 
   get content() {
-    return this._content == undefined ? null : this._content;
+    return this.product.content === undefined ? null : this.product.content;
   }
 
   set content(value) {
-    this._content = value;
+    this.product.content = value;
   }
 
-  get sku_ids() {
-    return this._sku_ids == undefined ? null : this._sku_ids;
+  get skuIds() {
+    return this.product.sku_ids === undefined ? null : this.product.sku_ids;
   }
 
-  set sku_ids(value) {
-    this._sku_ids = value;
+  set skuIds(value) {
+    this.product.sku_ids = value;
   }
 
   get photo() {
-    return this._photo == undefined ? null : this._photo;
+    return this.product.photo === undefined ? null : this.product.photo;
   }
 
   set photo(value) {
-    this._photo = value;
+    this.product.photo = value;
   }
 
-  get created_date() {
-    return this._created_date == undefined ? null : this._created_date;
+  get createdDate() {
+    return this.product.created_date === undefined ? null : this.product.created_date;
   }
 
-  set created_date(value) {
-    this._created_date = value;
+  set createdDate(value) {
+    this.product.created_date = value;
   }
 
-  get updated_date() {
-    return this._updated_date == undefined ? null : this._updated_date;
+  get updatedDate() {
+    return this.product.updated_date === undefined ? null : this.product.updated_date;
   }
 
-  set updated_date(value) {
-    this._updated_date = value;
+  set updatedDate(value) {
+    this.product.updated_date = value;
   }
 }
 
