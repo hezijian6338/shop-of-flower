@@ -1,16 +1,16 @@
 class Cart {
   constructor({
     id,
-    product_id,
+    productId,
     name,
-    sku_id,
+    skuId,
     standard,
     price,
     photo,
-    created_date,
-    updated_date
+    createdDate,
+    updatedDate,
   }) {
-    this._cart = {
+    this.cart = {
       id: String,
       product_id: String,
       name: String,
@@ -19,108 +19,109 @@ class Cart {
       price: Number,
       photo: String,
       created_date: String,
-      updated_date: String
+      updated_date: String,
     };
-    this._cart.id = id;
-    this._cart.product_id = product_id;
-    this._cart.name = name;
-    this._cart.sku_id = sku_id;
-    this._cart.standard = standard;
-    this._cart.price = price;
-    this._cart.photo = photo;
-    this._cart.created_date = created_date;
-    this._cart.updated_date = updated_date;
+    this.cart.id = id;
+    this.cart.product_id = productId;
+    this.cart.name = name;
+    this.cart.sku_id = skuId;
+    this.cart.standard = standard;
+    this.cart.price = price;
+    this.cart.photo = photo;
+    this.cart.created_date = createdDate;
+    this.cart.updated_date = updatedDate;
   }
 
   getData() {
-    let cart = this._cart;
+    const { cart } = this.cart;
 
-    let cart_with_no_null = Object.assign({}, this._cart);
+    const cartWithNoNull = { ...this.cart };
 
-    let properties = Object.getOwnPropertyNames(this._cart);
+    const properties = Object.getOwnPropertyNames(this.cart);
 
-    for (let property of properties) {
-      if (Reflect.get(this._cart, property) == null)
-        Reflect.deleteProperty(cart_with_no_null, property);
-    }
+    properties.forEach((property) => {
+      if (Reflect.get(this.cart, property) == null) {
+        Reflect.deleteProperty(cartWithNoNull, property);
+      }
+    });
 
-    return { cart, cart_with_no_null };
+    return { cart, cartWithNoNull };
   }
 
   get id() {
-    return this._cart.id == undefined ? null : this._cart.id;
+    return this.cart.id === undefined ? null : this.cart.id;
   }
 
   set id(value) {
-    this._cart.id = value;
+    this.cart.id = value;
   }
 
-  get product_id() {
-    return this._cart.product_id == undefined ? null : this._cart.product_id;
+  get productId() {
+    return this.cart.product_id === undefined ? null : this.cart.product_id;
   }
 
-  set product_id(value) {
-    this._cart.product_id = value;
+  set productId(value) {
+    this.cart.product_id = value;
   }
 
   get name() {
-    return this._cart.name == undefined ? null : this._cart.name;
+    return this.cart.name === undefined ? null : this.cart.name;
   }
 
   set name(value) {
-    this._cart.name = value;
+    this.cart.name = value;
   }
 
-  get sku_id() {
-    return this._cart.sku_id == undefined ? null : this._cart.sku_id;
+  get skuId() {
+    return this.cart.sku_id === undefined ? null : this.cart.sku_id;
   }
 
-  set sku_id(value) {
-    this._cart.sku_id = value;
+  set skuId(value) {
+    this.cart.sku_id = value;
   }
 
   get standard() {
-    return this._cart.standard == undefined ? null : this._cart.standard;
+    return this.cart.standard === undefined ? null : this.cart.standard;
   }
 
   set standard(value) {
-    this._cart.standard = value;
+    this.cart.standard = value;
   }
 
   get price() {
-    return this._cart.price == undefined ? null : this._cart.price;
+    return this.cart.price === undefined ? null : this.cart.price;
   }
 
   set price(value) {
-    this._cart.price = value;
+    this.cart.price = value;
   }
 
   get photo() {
-    return this._cart.photo == undefined ? null : this._cart.photo;
+    return this.cart.photo === undefined ? null : this.cart.photo;
   }
 
   set photo(value) {
-    this._cart.photo = value;
+    this.cart.photo = value;
   }
 
-  get created_date() {
-    return this._cart.created_date == undefined
+  get createdDate() {
+    return this.cart.created_date === undefined
       ? null
-      : this._cart.created_date;
+      : this.cart.created_date;
   }
 
-  set created_date(value) {
-    this._cart.created_date = value;
+  set createdDate(value) {
+    this.cart.created_date = value;
   }
 
-  get updated_date() {
-    return this._cart.updated_date == undefined
+  get updatedDate() {
+    return this.cart.updated_date === undefined
       ? null
-      : this._cart.updated_date;
+      : this.cart.updated_date;
   }
 
-  set updated_date(value) {
-    this._cart.updated_date = value;
+  set updatedDate(value) {
+    this.cart.updated_date = value;
   }
 }
 

@@ -1,12 +1,14 @@
 class Sku {
-  constructor({ id, standard, price, photo, created_date, updated_date }) {
+  constructor({
+    id, standard, price, photo, created_date, updated_date,
+  }) {
     this._sku = {
       id: String,
       standard: String,
       price: Number,
       photo: String,
       created_date: String,
-      updated_date: String
+      updated_date: String,
     };
     this._sku.id = id;
     this._sku.standard = standard;
@@ -17,13 +19,12 @@ class Sku {
   }
 
   getData() {
-    let sku = this._sku;
-    let sku_with_no_null = Object.assign({}, this._sku);
+    const sku = this._sku;
+    const sku_with_no_null = { ...this._sku };
 
-    let properties = Object.getOwnPropertyNames(this._sku);
-    for (let property of properties) {
-      if (Reflect.get(this._sku, property) == null)
-        Reflect.deleteProperty(sku_with_no_null, property);
+    const properties = Object.getOwnPropertyNames(this._sku);
+    for (const property of properties) {
+      if (Reflect.get(this._sku, property) == null) { Reflect.deleteProperty(sku_with_no_null, property); }
     }
 
     return { sku, sku_with_no_null };

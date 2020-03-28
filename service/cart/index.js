@@ -1,22 +1,22 @@
-const { mysql } = require("../../database/mysql");
-const Cart = require("../../model/cart");
-const Uuid = require("../../utils/uuid");
-const { getProduct } = require("../product");
-const { getSku } = require("../sku");
-const { getUser } = require("../user");
+const { mysql } = require('../../database/mysql');
+const Cart = require('../../model/cart');
+const Uuid = require('../../utils/uuid');
+const { getProduct } = require('../product');
+const { getSku } = require('../sku');
+const { getUser } = require('../user');
 
 async function newCart({ ctx }) {
   let new_cart_info = {};
   new_cart_info = ctx.request.body;
 
-  let cart = new Cart(new_cart_info);
+  const cart = new Cart(new_cart_info);
   cart.id = new Uuid().uuid;
   cart.created_date = new Date().getTime();
   cart.updated_date = new Date().getTime();
 
   // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
-  const product_id = cart.product_id;
-  const sku_id = cart.sku_id;
+  const { product_id } = cart;
+  const { sku_id } = cart;
 
   const { product_with_no_null } = await getProduct({ id: product_id });
   cart.name = product_with_no_null.name;
@@ -26,19 +26,19 @@ async function newCart({ ctx }) {
   cart.price = sku_with_no_null.price;
   cart.photo = sku_with_no_null.photo;
 
-  const result = await mysql("cart").insert(cart.getData().cart);
+  const result = await mysql('cart').insert(cart.getData().cart);
 
   return result[0] === 0 ? { result: true, id: cart.id } : { result: false };
 }
 
 async function getCart({ ctx, id }) {
-  let cart_info = await mysql("cart")
+  const cart_info = await mysql('cart')
     .where({
-      id: id
+      id,
     })
     .select();
 
-  let cart = new Cart(cart_info[0]);
+  const cart = new Cart(cart_info[0]);
 
   return cart.getData();
 }
@@ -51,12 +51,12 @@ async function getCarts({ ctx, userId }) {
   const cartIds = user.cart_ids().split(',');
 
   // TODO: 构建购物车列表详细信息
-  let carts = Array;
-  for (let cartId of cartIds) {
+  const carts = Array;
+  for (const cartId of cartIds) {
     // 一个一个购物车 id查询
-    let cartInfo = await mysql("cart")
+    const cartInfo = await mysql('cart')
       .where({
-        id: cartId
+        id: cartId,
       })
       .select();
 
@@ -71,20 +71,20 @@ async function setCart({ ctx, id }) {
   let update_cart_info = {};
   update_cart_info = ctx.request.body;
 
-  let cart = new Cart(update_cart_info);
+  const cart = new Cart(update_cart_info);
 
   cart.updated_date = new Date().getTime();
 
   // TODO: 检查更新信息字段中有没有更新到 product_id和 sku_id
   if (cart.product_id != null) {
-    const product_id = cart.product_id;
+    const { product_id } = cart;
 
     const { product_with_no_null } = await getProduct({ id: product_id });
     cart.name = product_with_no_null.name;
   }
 
   if (cart.sku_id != null) {
-    const sku_id = cart.sku_id;
+    const { sku_id } = cart;
 
     const { sku_with_no_null } = await getSku({ id: sku_id });
     cart.standard = sku_with_no_null.standard;
@@ -92,9 +92,9 @@ async function setCart({ ctx, id }) {
     cart.photo = sku_with_no_null.photo;
   }
 
-  const result = await mysql("cart")
+  const result = await mysql('cart')
     .where({
-      id: id
+      id,
     })
     .update(cart.getData().cart_with_no_null);
 
@@ -102,12 +102,14 @@ async function setCart({ ctx, id }) {
 }
 
 async function delCart({ ctx, id }) {
-  const result = await mysql("cart")
+  const result = await mysql('cart')
     .where({
-      id: id
+      id,
     })
     .del();
   return result === 1;
 }
 
-module.exports = { newCart, getCart, getCarts, setCart, delCart };
+module.exports = {
+  newCart, getCart, getCarts, setCart, delCart,
+};

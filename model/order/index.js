@@ -9,7 +9,7 @@ class Order {
     photo,
     state,
     created_date,
-    updated_date
+    updated_date,
   }) {
     this._order = {
       id: String,
@@ -21,7 +21,7 @@ class Order {
       photo: String,
       state: Number,
       created_date: String,
-      updated_date: String
+      updated_date: String,
     };
     this._order.id = id;
     this._order.product_id = product_id;
@@ -36,13 +36,12 @@ class Order {
   }
 
   getData() {
-    let order = this._order;
-    let order_with_no_null = Object.assign({}, this._order);
+    const order = this._order;
+    const order_with_no_null = { ...this._order };
 
-    let properties = Object.getOwnPropertyNames(this._order);
-    for (let property of properties) {
-      if (Reflect.get(this._order, property) == null)
-        Reflect.deleteProperty(order_with_no_null, property);
+    const properties = Object.getOwnPropertyNames(this._order);
+    for (const property of properties) {
+      if (Reflect.get(this._order, property) == null) { Reflect.deleteProperty(order_with_no_null, property); }
     }
 
     return { order, order_with_no_null };

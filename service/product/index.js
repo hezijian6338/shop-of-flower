@@ -1,6 +1,6 @@
-const { mysql } = require("../../database/mysql");
-const Product = require("../../model/product");
-const Uuid = require("../../utils/uuid");
+const { mysql } = require('../../database/mysql');
+const Product = require('../../model/product');
+const Uuid = require('../../utils/uuid');
 
 async function newProduct({ ctx }) {
   // 实体类字段控制
@@ -9,7 +9,7 @@ async function newProduct({ ctx }) {
   new_product_info = ctx.request.body;
 
   // 配置一个合法的数据库对象进行操作
-  let product = new Product(new_product_info);
+  const product = new Product(new_product_info);
   // product.name = Reflect.get(new_product_info, "name");
   // product.brief = Reflect.get(new_product_info, "brief");
   // product.content = Reflect.get(new_product_info, "content");
@@ -29,7 +29,7 @@ async function newProduct({ ctx }) {
   console.log(new_product_info);
 
   // 执行数据库语句
-  const result = await mysql("product").insert(product.getData().product);
+  const result = await mysql('product').insert(product.getData().product);
 
   console.log(result);
 
@@ -39,12 +39,12 @@ async function newProduct({ ctx }) {
 // 获取商品信息
 async function getProduct({ ctx, id }) {
   // 查询 product表, 根据商品 id进行查询
-  const product_info = await mysql("product")
+  const product_info = await mysql('product')
     .where({ product_id: id })
     .select();
 
   // 配置一个合法的对象给前端进行操作
-  let product = new Product(product_info[0]);
+  const product = new Product(product_info[0]);
   // product.id = Reflect.get(product_info, "id");
   // product.product_id = Reflect.get(product_info, "product_id");
   // product.name = Reflect.get(product_info, "name");
@@ -66,7 +66,7 @@ async function setProduct({ ctx, id }) {
   update_product_info = ctx.request.body;
 
   // 配置一个合法的对象给数据库进行操作
-  let product = new Product(update_product_info);
+  const product = new Product(update_product_info);
   // product.id = Reflect.get(update_product_info, "id");
   // product.product_id = Reflect.get(update_product_info, "product_id");
   // product.name = Reflect.get(update_product_info, "name");
@@ -78,7 +78,7 @@ async function setProduct({ ctx, id }) {
   product.updated_date = new Date().getTime();
 
   // 执行更新语句...
-  const result = await mysql("product")
+  const result = await mysql('product')
     .where({ product_id: id })
     // 这里使用没有 null值的对象, 因为这样可以定向更新数据
     .update(product.getData().product_with_no_null);
@@ -88,7 +88,7 @@ async function setProduct({ ctx, id }) {
 
 async function delProduct({ ctx, id }) {
   // 直接执行删除...
-  const result = await mysql("product")
+  const result = await mysql('product')
     .where({ product_id: id })
     .del();
 
@@ -97,13 +97,15 @@ async function delProduct({ ctx, id }) {
 
 // TODO: 查询所有的商品信息
 async function getProducts({ ctx }) {
-  const result = await mysql("product").select();
-  let products = Array;
-  for (let product of result) {
+  const result = await mysql('product').select();
+  const products = Array;
+  for (const product of result) {
     products.push(product);
   }
 
   return products;
 }
 
-module.exports = { getProduct, setProduct, delProduct, newProduct, getProducts };
+module.exports = {
+  getProduct, setProduct, delProduct, newProduct, getProducts,
+};

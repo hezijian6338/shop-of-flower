@@ -1,10 +1,10 @@
-const service = require("../../service/cart");
-const Response = require("../../utils/response");
+const service = require('../../service/cart');
+const Response = require('../../utils/response');
 
 async function _newCart(ctx) {
-  let result = await service.newCart({ ctx });
+  const result = await service.newCart({ ctx });
 
-  let response = new Response();
+  const response = new Response();
   if (result) {
     response.SUCCESS = 200;
   } else {
@@ -15,11 +15,11 @@ async function _newCart(ctx) {
 }
 
 async function _getCart(ctx) {
-  const id = ctx.params.id;
+  const { id } = ctx.params;
 
   const { cart } = await service.getCart({ ctx, id });
 
-  let response = new Response();
+  const response = new Response();
   response.SUCCESS = 200;
   response.DATA = cart;
 
@@ -27,11 +27,11 @@ async function _getCart(ctx) {
 }
 
 async function _getCarts(ctx) {
-  const userId = ctx.params.userId;
+  const { userId } = ctx.params;
 
   const carts = await service.getCarts({ ctx, userId });
 
-  let response = new Response();
+  const response = new Response();
   response.SUCCESS = 200;
   response.DATA = carts;
 
@@ -39,11 +39,11 @@ async function _getCarts(ctx) {
 }
 
 async function _setCart(ctx) {
-  const id = ctx.params.id;
+  const { id } = ctx.params;
 
-  let result = await service.setCart({ ctx, id });
+  const result = await service.setCart({ ctx, id });
 
-  let response = new Response();
+  const response = new Response();
   if (result) {
     response.SUCCESS = 200;
   } else {
@@ -54,11 +54,11 @@ async function _setCart(ctx) {
 }
 
 async function _delCart(ctx) {
-  const id = ctx.params.id;
+  const { id } = ctx.params;
 
   const result = await service.delCart({ id });
 
-  let response = new Response();
+  const response = new Response();
   if (result) {
     response.SUCCESS = 200;
   } else {
@@ -68,4 +68,6 @@ async function _delCart(ctx) {
   ctx.body = response.getData();
 }
 
-module.exports = { _newCart, _getCart, _getCarts, _setCart, _delCart };
+module.exports = {
+  _newCart, _getCart, _getCarts, _setCart, _delCart,
+};

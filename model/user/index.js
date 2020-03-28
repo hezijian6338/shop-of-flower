@@ -8,7 +8,7 @@ class User {
     order_ids,
     cart_ids,
     created_date,
-    updated_date
+    updated_date,
   }) {
     this._user = {
       id: String,
@@ -19,7 +19,7 @@ class User {
       order_ids: String,
       cart_ids: String,
       created_date: String,
-      updated_date: String
+      updated_date: String,
     };
     this._user.id = id;
     this._user.phone = phone;
@@ -33,13 +33,12 @@ class User {
   }
 
   getData() {
-    let user = this._user;
-    let user_with_no_null = Object.assign({}, this._user);
+    const user = this._user;
+    const user_with_no_null = { ...this._user };
 
-    let properties = Object.getOwnPropertyNames(this._user);
-    for (let property of properties) {
-      if (Reflect.get(this._user, property) == null)
-        Reflect.deleteProperty(user_with_no_null, property);
+    const properties = Object.getOwnPropertyNames(this._user);
+    for (const property of properties) {
+      if (Reflect.get(this._user, property) == null) { Reflect.deleteProperty(user_with_no_null, property); }
     }
 
     return { user, user_with_no_null };
@@ -92,6 +91,7 @@ class User {
   set cart_ids(value) {
     this._user.cart_ids = value;
   }
+
   get created_date() {
     return this._user.created_date == undefined
       ? null

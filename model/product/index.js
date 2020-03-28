@@ -9,7 +9,7 @@ class Product {
     sku_ids,
     photo,
     created_date,
-    updated_date
+    updated_date,
   }) {
     this._id = id;
     this._product_id = product_id;
@@ -23,7 +23,7 @@ class Product {
   }
 
   getData() {
-    let product = {
+    const product = {
       id: this.id,
       product_id: this.product_id,
       name: this.name,
@@ -32,24 +32,24 @@ class Product {
       sku_ids: this.sku_ids,
       photo: this.photo,
       created_date: String,
-      updated_date: String
+      updated_date: String,
     };
 
     // 输出对象中拥有的自身属性
     // console.log(Object.getOwnPropertyNames(product));
 
     // 深层次复制
-    let product_with_no_null = Object.assign({}, product);
+    const product_with_no_null = { ...product };
     // let product_with_no_null = { ...product };
 
     // 浅层次复制, 只复制了引用地址, 两对象的值会联动修改
     // let product_with_no_null = product;
 
     // 自身属性复制一个数组中
-    let propertys = Object.getOwnPropertyNames(product);
+    const propertys = Object.getOwnPropertyNames(product);
 
     // 遍历数组内容, 对新复制的数组中为 null值得进行剔除... 返回一个无空值的结果对象
-    for (let property of propertys) {
+    for (const property of propertys) {
       if (Reflect.get(product, property) == null) {
         Reflect.deleteProperty(product_with_no_null, property);
       }
@@ -77,7 +77,7 @@ class Product {
 
   set product_id(value) {
     this._product_id = value;
-    console.log("product_id:" + value);
+    console.log(`product_id:${value}`);
   }
 
   get name() {
