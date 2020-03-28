@@ -1,5 +1,6 @@
 const configs = require('./config');
 
+// eslint-disable-next-line import/order
 const knex = require('knex')({
   client: 'mysql',
   version: '5.7',

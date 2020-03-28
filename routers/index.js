@@ -1,76 +1,76 @@
 const Router = require('koa-router');
-const _user = require('../controller/user');
-const _product = require('../controller/prodcut');
-const _cart = require('../controller/cart');
-const _sku = require('../controller/sku');
-const _order = require('../controller/order');
+const user = require('../controller/user');
+const product = require('../controller/prodcut');
+const cart = require('../controller/cart');
+const sku = require('../controller/sku');
+const order = require('../controller/order');
 
 // 路由中间件
 
 // 首页路由
 const index = new Router();
-index.get('/index', async (ctx) => { });
+// index.get('/index', async (ctx) => { });
 
 // 个人信息页面路由
-const user = new Router();
+const rUser = new Router();
 // 用户详细信息 (路径参数传递)
-user.get('/user/:id', _user._getUser);
-user.get('/user/phone/:phone', _user._getUserByPhone);
+rUser.get('/user/:id', user.getUser);
+rUser.get('/user/phone/:phone', user.getUserByPhone);
 // user = { all }
-user.post('/user', _user._newUser);
+rUser.post('/user', user.newUser);
 // user = { phone: phone, password: password}
-user.post('/user/login', _user._login);
+rUser.post('/user/login', user.login);
 // user = { all }
-user.put('/user/:id', _user._setUser);
-user.del('/user/:id', _user._delUser);
+rUser.put('/user/:id', user.setUser);
+rUser.del('/user/:id', user.delUser);
 
 // 商品详情路由
-const product = new Router();
+const rProduct = new Router();
 // 主页详情 (路径参数传递)
-product.get('/product/list', _product._getProducts);
+rProduct.get('/product/list', product.getProducts);
 // 根据 id获取商品信息
-product.get('/product/:id', _product._getProduct);
-product.put('/product/:id', _product._setProduct);
+rProduct.get('/product/:id', product.getProduct);
+rProduct.put('/product/:id', product.setProduct);
 // product = { all }
-product.post('/product', _product._newProduct);
-product.delete('/product/:id', _product._delProduct);
+rProduct.post('/product', product.newProduct);
+rProduct.delete('/product/:id', product.delProduct);
 
 // 购物车操作路由
-const cart = new Router();
+const rCart = new Router();
 // 根据用户信息查询购物车列表信息
-cart.get('/cart/list/user/:userId', _cart._getCarts);
+rCart.get('/cart/list/user/:userId', cart.getCarts);
 // 根据购物车 id查询信息
-cart.get('/cart/:id', _cart._getCart);
-cart.put('/cart/:id', _cart._setCart);
+rCart.get('/cart/:id', cart.getCart);
+rCart.put('/cart/:id', cart.setCart);
 // cart = { all }
-cart.post('/cart', _cart._newCart);
-cart.delete('/cart/:id', _cart._delCart);
+rCart.post('/cart', cart.newCart);
+rCart.delete('/cart/:id', cart.delCart);
 
 // 商品规格操作路由
-const sku = new Router();
-sku.get('/sku/:id', _sku._getSku);
-sku.put('/sku/:id', _sku._setSku);
+const rSku = new Router();
+rSku.get('/sku/:id', sku.getSku);
+rSku.put('/sku/:id', sku.setSku);
 // cart = { all }
-sku.post('/sku', _sku._newSku);
-sku.delete('/sku/:id', _sku._delSku);
+rSku.post('/sku', sku.newSku);
+rSku.delete('/sku/:id', sku.delSku);
 
 // 订单操作路由
-const order = new Router();
+const rOrder = new Router();
 // 订单列表
-order.get('/order/list/user/:userId', _order._getOrders);
+rOrder.get('/order/list/user/:userId', order.getOrders);
 // 订单查询
-order.get('/order/:id', _order._getOrder);
-order.put('/order/:id', _order._setOrder);
+rOrder.get('/order/:id', order.getOrder);
+rOrder.put('/order/:id', order.setOrder);
 // order = { all }
-order.post('/order', _order._newOrder);
-order.delete('/order/:id', _order._delOrder);
+rOrder.post('/order', order.newOrder);
+rOrder.delete('/order/:id', order.delOrder);
 
 // 付款路由
 const pay = new Router();
 // 微信付款路由
-pay.get('/pay/wechat', async (ctx) => { });
+// pay.get('/pay/wechat', async (ctx) => { });
 // 支付宝付款路由
-pay.get('/pay/alipay', async (ctx) => { });
+// pay.get('/pay/alipay', async (ctx) => { });
 
 module.exports = {
   index, user, product, pay, sku, cart, order,

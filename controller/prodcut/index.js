@@ -1,13 +1,13 @@
-const service = require("../../service/product");
-const Response = require("../../utils/response");
+const service = require('../../service/product');
+const Response = require('../../utils/response');
 
 // 路由传递进来 ctx
 
-async function _newProduct(ctx) {
+async function newProduct(ctx) {
   const result = await service.newProduct({ ctx });
 
   // 回应体抽离对象实现
-  let body = new Response();
+  const body = new Response();
 
   if (result) {
     // 配置成功与否和代码参数
@@ -23,13 +23,13 @@ async function _newProduct(ctx) {
 }
 
 // 使用 service传递过来的信息, 返回接口信息
-async function _getProduct(ctx) {
-  const id = ctx.params.id;
+async function getProduct(ctx) {
+  const { id } = ctx.params;
 
   const { product } = await service.getProduct({ ctx, id });
 
   // 回应体抽离对象实现
-  let body = new Response();
+  const body = new Response();
   body.SUCCESS = 200;
   body.DATA = product;
 
@@ -37,12 +37,12 @@ async function _getProduct(ctx) {
   ctx.body = body.getData();
 }
 
-async function _setProduct(ctx) {
-  const id = ctx.params.id;
+async function setProduct(ctx) {
+  const { id } = ctx.params;
   const result = await service.setProduct({ ctx, id });
 
   // 回应体抽离对象实现
-  let body = new Response();
+  const body = new Response();
 
   if (result) {
     body.SUCCESS = 200;
@@ -55,12 +55,12 @@ async function _setProduct(ctx) {
   ctx.body = body.getData();
 }
 
-async function _delProduct(ctx) {
-  const id = ctx.params.id;
+async function delProduct(ctx) {
+  const { id } = ctx.params;
   const result = await service.delProduct({ ctx, id });
 
   // 回应体抽离对象实现
-  let body = new Response();
+  const body = new Response();
 
   if (result) {
     body.SUCCESS = 200;
@@ -73,11 +73,11 @@ async function _delProduct(ctx) {
   ctx.body = body.getData();
 }
 
-async function _getProducts(ctx) {
-  const products = await service.getProducts({ ctx })
+async function getProducts(ctx) {
+  const products = await service.getProducts({ ctx });
 
   // 回应体抽离对象实现
-  let body = new Response();
+  const body = new Response();
   body.SUCCESS = 200;
   body.DATA = products;
 
@@ -85,4 +85,6 @@ async function _getProducts(ctx) {
   ctx.body = body.getData();
 }
 
-module.exports = { _newProduct, _getProduct, _setProduct, _delProduct, _getProducts };
+module.exports = {
+  newProduct, getProduct, setProduct, delProduct, getProducts,
+};

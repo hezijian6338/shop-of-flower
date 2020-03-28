@@ -1,7 +1,7 @@
 const service = require('../../service/cart');
 const Response = require('../../utils/response');
 
-async function _newCart(ctx) {
+async function newCart(ctx) {
   const result = await service.newCart({ ctx });
 
   const response = new Response();
@@ -14,7 +14,7 @@ async function _newCart(ctx) {
   ctx.body = response.getData();
 }
 
-async function _getCart(ctx) {
+async function getCart(ctx) {
   const { id } = ctx.params;
 
   const { cart } = await service.getCart({ ctx, id });
@@ -26,7 +26,7 @@ async function _getCart(ctx) {
   ctx.body = response.getData();
 }
 
-async function _getCarts(ctx) {
+async function getCarts(ctx) {
   const { userId } = ctx.params;
 
   const carts = await service.getCarts({ ctx, userId });
@@ -38,7 +38,7 @@ async function _getCarts(ctx) {
   ctx.body = response.getData();
 }
 
-async function _setCart(ctx) {
+async function setCart(ctx) {
   const { id } = ctx.params;
 
   const result = await service.setCart({ ctx, id });
@@ -53,7 +53,7 @@ async function _setCart(ctx) {
   ctx.body = response.getData();
 }
 
-async function _delCart(ctx) {
+async function delCart(ctx) {
   const { id } = ctx.params;
 
   const result = await service.delCart({ id });
@@ -69,5 +69,5 @@ async function _delCart(ctx) {
 }
 
 module.exports = {
-  _newCart, _getCart, _getCarts, _setCart, _delCart,
+  newCart, getCart, getCarts, setCart, delCart,
 };
