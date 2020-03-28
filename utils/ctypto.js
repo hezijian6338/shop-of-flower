@@ -1,14 +1,14 @@
-const crypto = require('crypto');
+const crypto = require('crypto')
 
 class Crypto {
   constructor(password) {
     this.hash = crypto
       .createHmac('sha256', password)
       .update('koa')
-      .digest('hex');
+      .digest('hex')
     // console.log(this.hash);
-    return this.hash;
+    return this.hash
   }
 }
 
-module.exports = Crypto;
+module.exports = Crypto

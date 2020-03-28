@@ -1,7 +1,7 @@
-const { mysql } = require('../../database/mysql');
-const User = require('../../model/user');
-const Uuid = require('../../utils/uuid');
-const Crypto = require('../../utils/ctypto');
+const { mysql } = require('../../database/mysql')
+const User = require('../../model/user')
+const Uuid = require('../../utils/uuid')
+const Crypto = require('../../utils/ctypto')
 
 /**
  * TODO: 检查密码是否正确
@@ -11,16 +11,16 @@ async function login({ phone, password }) {
     .where({
       phone,
     })
-    .select('password');
+    .select('password')
 
-  return new Crypto(password).hash === originPassword[0].password;
+  return new Crypto(password).hash === originPassword[0].password
 }
 
 /**
  * TODO: 以用户电话检索用户信息
  */
 async function getUserByPhone({ phone }) {
-  let userInfo = {};
+  let userInfo = {}
 
   await mysql('user')
     .where({
@@ -28,65 +28,65 @@ async function getUserByPhone({ phone }) {
     })
     .select()
     .then((raw) => {
-      [userInfo] = raw;
-    });
+      [userInfo] = raw
+    })
 
-  const user = new User(userInfo);
+  const user = new User(userInfo)
 
-  return user.getData();
+  return user.getData()
 }
 
 async function newUser({ ctx }) {
-  let newUserInfo = {};
-  newUserInfo = ctx.request.body;
+  let newUserInfo = {}
+  newUserInfo = ctx.request.body
 
-  const user = new User(newUserInfo);
-  user.id = new Uuid().uuid;
-  user.password = new Crypto(user.password).hash;
-  user.created_date = new Date().getTime();
-  user.updated_date = new Date().getTime();
+  const user = new User(newUserInfo)
+  user.id = new Uuid().uuid
+  user.password = new Crypto(user.password).hash
+  user.created_date = new Date().getTime()
+  user.updated_date = new Date().getTime()
 
   // console.log(user.getData().user_with_no_null);
 
-  const result = await mysql('user').insert(user.getData().user);
+  const result = await mysql('user').insert(user.getData().user)
 
-  return result[0] === 0;
+  return result[0] === 0
 }
 
 async function getUser({ id }) {
   const userInfo = await mysql('user')
     .where({ id })
-    .select();
+    .select()
 
-  const user = new User(userInfo[0]);
+  const user = new User(userInfo[0])
 
-  return user.getData();
+  return user.getData()
 }
 
 async function setUser({ ctx, id }) {
-  let updateUserInfo = {};
-  updateUserInfo = ctx.request.body;
+  let updateUserInfo = {}
+  updateUserInfo = ctx.request.body
 
-  const user = new User(updateUserInfo);
-  user.updated_date = new Date().getTime();
+  const user = new User(updateUserInfo)
+  user.updated_date = new Date().getTime()
 
   const result = await mysql('user')
     .where({
       id,
     })
-    .update(user.getData().user_with_no_null);
+    .update(user.getData().user_with_no_null)
 
-  return result === 1;
+  return result === 1
 }
 
 async function delUser({ id }) {
   const result = await mysql('user')
     .where({ id })
-    .del();
+    .del()
 
-  return result === 1;
+  return result === 1
 }
 
 module.exports = {
   newUser, getUser, setUser, delUser, login, getUserByPhone,
-};
+}

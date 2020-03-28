@@ -12,6 +12,6 @@ const CONF = {
     pass: 'hezijian6338',
     char: 'utf8mb4',
   },
-};
+}
 
-module.exports = CONF;
+module.exports = CONF
