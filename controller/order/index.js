@@ -28,6 +28,18 @@ async function _getOrder(ctx) {
   ctx.body = response.getData();
 }
 
+async function _getOrders(ctx) {
+  const userId = ctx.params.userId;
+
+  const orders = await service.getOrders({ ctx, userId });
+
+  let response = new Response();
+  response.SUCCESS = 200;
+  response.DATA = orders;
+
+  ctx.body = response.getData();
+}
+
 async function _setOrder(ctx) {
   const id = ctx.params.id;
 
@@ -58,4 +70,4 @@ async function _delOrder(ctx) {
   ctx.body = response.getData();
 }
 
-module.exports = { _newOrder, _getOrder, _setOrder, _delOrder };
+module.exports = { _newOrder, _getOrder, _getOrders, _setOrder, _delOrder };

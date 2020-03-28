@@ -53,6 +53,9 @@ sku.delete("/sku/:id", _sku._delSku);
 
 // 订单操作路由
 const order = new Router();
+// 订单列表
+order.get("/order/user/:userId", _order._getOrders);
+// 订单查询
 order.get("/order/:id", _order._getOrder);
 order.put("/order/:id", _order._setOrder);
 // order = { all }

@@ -3,6 +3,7 @@ const Order = require("../../model/order");
 const Uuid = require("../../utils/uuid");
 const { getProduct } = require("../product");
 const { getSku } = require("../sku");
+const { getUser } = require("../user")
 
 async function newOrder({ ctx }) {
   let new_order_info = {};
@@ -40,6 +41,29 @@ async function getOrder({ ctx, id }) {
   const order = new Order(order_info[0]);
 
   return order.getData();
+}
+
+async function getOrders({ ctx, userId }) {
+  // TODO: 查询用户信息, 得出用户的订单列表
+  const { user } = getUser(userId);
+  // 取订单列表为数组
+  const orderIds = user.order_ids().split(',');
+
+  // TODO: 构建订单列表详细信息
+  let orders = Array;
+  for (let orderId of orderIds) {
+    // 一个一个订单 id查询
+    let order_info = await mysql("order")
+      .where({
+        id: orderId
+      })
+      .select();
+
+    // 插入数组列表中
+    orders.push(order_info[0]);
+  }
+
+  return orders;
 }
 
 async function setOrder({ ctx, id }) {
@@ -85,4 +109,4 @@ async function delOrder({ ctx, id }) {
   return result === 1;
 }
 
-module.exports = { newOrder, getOrder, setOrder, delOrder };
+module.exports = { newOrder, getOrder, getOrders, setOrder, delOrder };
