@@ -26,6 +26,18 @@ async function _getCart(ctx) {
   ctx.body = response.getData();
 }
 
+async function _getCarts(ctx) {
+  const userId = ctx.params.userId;
+
+  const carts = await service.getCarts({ ctx, userId });
+
+  let response = new Response();
+  response.SUCCESS = 200;
+  response.DATA = carts;
+
+  ctx.body = response.getData();
+}
+
 async function _setCart(ctx) {
   const id = ctx.params.id;
 
@@ -56,4 +68,4 @@ async function _delCart(ctx) {
   ctx.body = response.getData();
 }
 
-module.exports = { _newCart, _getCart, _setCart, _delCart };
+module.exports = { _newCart, _getCart, _getCarts, _setCart, _delCart };

@@ -37,6 +37,9 @@ product.delete("/product/:id", _product._delProduct);
 
 // 购物车操作路由
 const cart = new Router();
+// 根据用户信息查询购物车列表信息
+cart.get("/cart/list/user/:userId", _cart._getCarts);
+// 根据购物车 id查询信息
 cart.get("/cart/:id", _cart._getCart);
 cart.put("/cart/:id", _cart._setCart);
 // cart = { all }

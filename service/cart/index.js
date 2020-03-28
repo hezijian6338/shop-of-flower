@@ -3,6 +3,7 @@ const Cart = require("../../model/cart");
 const Uuid = require("../../utils/uuid");
 const { getProduct } = require("../product");
 const { getSku } = require("../sku");
+const { getUser } = require("../user");
 
 async function newCart({ ctx }) {
   let new_cart_info = {};
@@ -40,6 +41,30 @@ async function getCart({ ctx, id }) {
   let cart = new Cart(cart_info[0]);
 
   return cart.getData();
+}
+
+// TODO: 根据用户查询该用户的购物车列表
+async function getCarts({ ctx, userId }) {
+  // TODO: 查询用户信息, 得出用户的购物车列表
+  const { user } = getUser(userId);
+  // 取订单列表为数组
+  const cartIds = user.cart_ids().split(',');
+
+  // TODO: 构建购物车列表详细信息
+  let carts = Array;
+  for (let cartId of cartIds) {
+    // 一个一个购物车 id查询
+    let cartInfo = await mysql("cart")
+      .where({
+        id: cartId
+      })
+      .select();
+
+    // 插入数组列表中
+    carts.push(cartInfo[0]);
+  }
+
+  return carts;
 }
 
 async function setCart({ ctx, id }) {
@@ -85,4 +110,4 @@ async function delCart({ ctx, id }) {
   return result === 1;
 }
 
-module.exports = { newCart, getCart, setCart, delCart };
+module.exports = { newCart, getCart, getCarts, setCart, delCart };
