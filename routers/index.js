@@ -16,6 +16,7 @@ const user = new Router();
 // 用户详细信息 (路径参数传递)
 user.get("/user/:id", _user._getUser);
 user.get("/user/phone/:phone", _user._getUserByPhone);
+// user = { all }
 user.post("/user", _user._newUser);
 // user = { phone: phone, password: password}
 user.post("/user/login", _user._login);
@@ -28,6 +29,7 @@ const product = new Router();
 // 主页详情 (路径参数传递)
 product.get("/product/:id", _product._getProduct);
 product.put("/product/:id", _product._setProduct);
+// product = { all }
 product.post("/product", _product._newProduct);
 product.delete("/product/:id", _product._delProduct);
 
@@ -35,6 +37,7 @@ product.delete("/product/:id", _product._delProduct);
 const cart = new Router();
 cart.get("/cart/:id", _cart._getCart);
 cart.put("/cart/:id", _cart._setCart);
+// cart = { all }
 cart.post("/cart", _cart._newCart);
 cart.delete("/cart/:id", _cart._delCart);
 
@@ -42,6 +45,7 @@ cart.delete("/cart/:id", _cart._delCart);
 const sku = new Router();
 sku.get("/sku/:id", _sku._getSku);
 sku.put("/sku/:id", _sku._setSku);
+// cart = { all }
 sku.post("/sku", _sku._newSku);
 sku.delete("/sku/:id", _sku._delSku);
 
@@ -49,6 +53,7 @@ sku.delete("/sku/:id", _sku._delSku);
 const order = new Router();
 order.get("/order/:id", _order._getOrder);
 order.put("/order/:id", _order._setOrder);
+// order = { all }
 order.post("/order", _order._newOrder);
 order.delete("/order/:id", _order._delOrder);
 
