@@ -18,7 +18,7 @@ async function newSku({ ctx }) {
 
   // console.log(result);
 
-  return result[0] === 0
+  return result[0] === 0 ? { result: true, id: sku.id } : { result: false }
 }
 
 async function getSku({ id }) {

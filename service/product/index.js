@@ -33,7 +33,7 @@ async function newProduct({ ctx }) {
 
   // console.log(result);
 
-  return result[0] === 0
+  return result[0] === 0 ? { result: true, id: product.id } : { result: false }
 }
 
 // 获取商品信息

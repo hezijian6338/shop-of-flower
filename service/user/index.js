@@ -50,7 +50,7 @@ async function newUser({ ctx }) {
 
   const result = await mysql('user').insert(user.getData().user)
 
-  return result[0] === 0
+  return result[0] === 0 ? { result: true, id: user.id } : { result: false }
 }
 
 async function getUser({ id }) {
