@@ -73,5 +73,5 @@ const pay = new Router()
 // pay.get('/pay/alipay', async (ctx) => { });
 
 module.exports = {
-  index, user, product, pay, sku, cart, order,
+  index, rUser, rProduct, pay, rSku, rCart, rOrder,
 }
