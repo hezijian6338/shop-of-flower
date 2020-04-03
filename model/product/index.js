@@ -19,8 +19,8 @@ class Product {
       content: String,
       sku_ids: String,
       photo: String,
-      created_date: String,
-      updated_date: String,
+      created_date: Number,
+      updated_date: Number,
     }
     this.product.id = id
     this.product.product_id = productId

@@ -18,8 +18,8 @@ class User {
       role: Number,
       order_ids: String,
       cart_ids: String,
-      created_date: String,
-      updated_date: String,
+      created_date: Number,
+      updated_date: Number,
     }
     this.user.id = id
     this.user.phone = phone

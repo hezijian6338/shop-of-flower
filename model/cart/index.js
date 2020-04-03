@@ -18,8 +18,8 @@ class Cart {
       standard: String,
       price: Number,
       photo: String,
-      created_date: String,
-      updated_date: String,
+      created_date: Number,
+      updated_date: Number,
     }
     this.cart.id = id
     this.cart.product_id = productId

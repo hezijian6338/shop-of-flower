@@ -20,8 +20,8 @@ class Order {
       price: Number,
       photo: String,
       state: Number,
-      created_date: String,
-      updated_date: String,
+      created_date: Number,
+      updated_date: Number,
     }
     this.order.id = id
     this.order.product_id = productId

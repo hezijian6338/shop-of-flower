@@ -7,8 +7,8 @@ class Sku {
       standard: String,
       price: Number,
       photo: String,
-      created_date: String,
-      updated_date: String,
+      created_date: Number,
+      updated_date: Number,
     }
     this.sku.id = id
     this.sku.standard = standard

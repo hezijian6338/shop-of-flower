@@ -22,4 +22,5 @@ app.use(router.rOrder.routes())
 
 // 开启服务
 app.listen(3000)
+// eslint-disable-next-line no-console
 console.log('the server is starting at port 3000')
