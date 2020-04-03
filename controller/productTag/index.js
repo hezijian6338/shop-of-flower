@@ -1,10 +1,8 @@
-const service = require('../../service/product')
+const service = require('../../service/productTag')
 const Response = require('../../utils/response')
 
-// 路由传递进来 ctx
-
-async function newProduct(ctx) {
-  const result = await service.newProduct({ ctx })
+async function newProductTag(ctx) {
+  const result = await service.newProductTag({ ctx })
 
   // 回应体抽离对象实现
   const body = new Response()
@@ -22,24 +20,23 @@ async function newProduct(ctx) {
   ctx.body = body.getData()
 }
 
-// 使用 service传递过来的信息, 返回接口信息
-async function getProduct(ctx) {
+async function getProductTag(ctx) {
   const { id } = ctx.params
 
-  const { product } = await service.getProduct({ ctx, id })
+  const { productTag } = await service.getProductTag({ ctx, id })
 
   // 回应体抽离对象实现
   const body = new Response()
   body.SUCCESS = 200
-  body.DATA = product
+  body.DATA = productTag
 
   // 返回信息到回应体
   ctx.body = body.getData()
 }
 
-async function setProduct(ctx) {
+async function setProductTag(ctx) {
   const { id } = ctx.params
-  const result = await service.setProduct({ ctx, id })
+  const result = await service.setProductTag({ ctx, id })
 
   // 回应体抽离对象实现
   const body = new Response()
@@ -55,9 +52,9 @@ async function setProduct(ctx) {
   ctx.body = body.getData()
 }
 
-async function delProduct(ctx) {
+async function delProductTag(ctx) {
   const { id } = ctx.params
-  const result = await service.delProduct({ ctx, id })
+  const result = await service.delProductTag({ ctx, id })
 
   // 回应体抽离对象实现
   const body = new Response()
@@ -73,18 +70,42 @@ async function delProduct(ctx) {
   ctx.body = body.getData()
 }
 
-async function getProducts(ctx) {
-  const products = await service.getProducts({ ctx })
+async function getTagList(ctx) {
+  const result = service.getTagList()
 
   // 回应体抽离对象实现
   const body = new Response()
-  body.SUCCESS = 200
-  body.DATA = products
+
+  if (result) {
+    body.SUCCESS = 200
+    body.DATA = result
+  } else {
+    body.FAIL = 500
+  }
+
+  // 返回信息到回应体
+  ctx.body = body.getData()
+}
+
+async function getProductListByTagName(ctx) {
+  const { tagName } = ctx.params
+
+  const result = service.getProductListByTagName({ tagName })
+
+  // 回应体抽离对象实现
+  const body = new Response()
+
+  if (result) {
+    body.SUCCESS = 200
+    body.DATA = result
+  } else {
+    body.FAIL = 500
+  }
 
   // 返回信息到回应体
   ctx.body = body.getData()
 }
 
 module.exports = {
-  newProduct, getProduct, setProduct, delProduct, getProducts,
+  newProductTag, getProductTag, setProductTag, delProductTag, getTagList, getProductListByTagName,
 }

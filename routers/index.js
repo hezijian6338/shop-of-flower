@@ -4,6 +4,7 @@ const product = require('../controller/prodcut')
 const cart = require('../controller/cart')
 const sku = require('../controller/sku')
 const order = require('../controller/order')
+const productTag = require('../controller/productTag')
 
 // 路由中间件
 
@@ -65,6 +66,18 @@ rOrder.put('/order/:id', order.setOrder)
 rOrder.post('/order', order.newOrder)
 rOrder.delete('/order/:id', order.delOrder)
 
+const rProductTag = new Router()
+// 产品标签列表
+rProductTag.get('/tag/list', productTag.getTagList)
+// 根据标签名字查询产品列表
+rProductTag.get('/tag/:tagName/product', productTag.getProductListByTagName)
+// 添加产品标签
+rProductTag.post('/tag', productTag.newProductTag)
+// 编辑产品标签
+rProductTag.put('/tag/:id', productTag.setProductTag)
+// 删除产品标签
+rProductTag.delete('/tag/:id', productTag.delProductTag)
+
 // 付款路由
 const pay = new Router()
 // 微信付款路由
@@ -73,5 +86,5 @@ const pay = new Router()
 // pay.get('/pay/alipay', async (ctx) => { });
 
 module.exports = {
-  index, rUser, rProduct, pay, rSku, rCart, rOrder,
+  index, rUser, rProduct, pay, rSku, rCart, rOrder, rProductTag,
 }

@@ -19,6 +19,7 @@ app.use(router.pay.routes())
 app.use(router.rSku.routes())
 app.use(router.rCart.routes())
 app.use(router.rOrder.routes())
+app.use(router.rProductTag.routes())
 
 // 开启服务
 app.listen(3000)
