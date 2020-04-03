@@ -11,8 +11,8 @@ async function newOrder({ ctx }) {
 
   const order = new Order(newOrderInfo)
   order.id = new Uuid().uuid
-  order.created_date = new Date().getTime()
-  order.updated_date = new Date().getTime()
+  order.createdDate = new Date()
+  // order.updated_date = new Date().getTime()
 
   // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
   const { productId } = order

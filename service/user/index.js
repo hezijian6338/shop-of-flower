@@ -43,8 +43,8 @@ async function newUser({ ctx }) {
   const user = new User(newUserInfo)
   user.id = new Uuid().uuid
   user.password = new Crypto(user.password).hash
-  user.created_date = new Date().getTime()
-  user.updated_date = new Date().getTime()
+  user.createdDate = new Date()
+  // user.updated_date = new Date().getTime()
 
   // console.log(user.getData().user_with_no_null);
 

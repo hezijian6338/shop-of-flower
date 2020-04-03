@@ -11,8 +11,8 @@ async function newCart({ ctx }) {
 
   const cart = new Cart(newCartInfo)
   cart.id = new Uuid().uuid
-  cart.created_date = new Date().getTime()
-  cart.updated_date = new Date().getTime()
+  cart.createdDate = new Date()
+  // cart.updated_date = new Date().getTime()
 
   // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
   const { productId } = cart

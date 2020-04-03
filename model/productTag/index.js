@@ -62,7 +62,7 @@ class ProductTag {
   }
 
   set createdDate(value) {
-    this.product.productTag = value
+    this.productTag.created_date = value
   }
 
   get updatedDate() {

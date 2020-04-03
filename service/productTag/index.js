@@ -10,8 +10,8 @@ async function newProductTag({ ctx }) {
   const productTag = new ProductTag(newProductTagInfo)
 
   productTag.id = new Uuid().uuid
-  productTag.create_date = Date.now()
-  productTag.update_date = Date.now()
+  productTag.createdDate = new Date()
+  // productTag.update_date = Date.now()
 
   const result = await mysql('product_tag').insert(productTag.getData().productTag)
 
@@ -50,11 +50,13 @@ async function delProductTag({ id }) {
 
 // TODO: 查找标签列表 (非重复)
 async function getTagList() {
-  let tagList = Array
+  const tagList = []
 
   const result = await mysql('product_tag').distinct('tag_name')
 
-  tagList = result
+  result.forEach((tag) => {
+    tagList.push(tag.tag_name)
+  })
 
   return tagList
 }

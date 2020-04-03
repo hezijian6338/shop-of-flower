@@ -18,8 +18,8 @@ async function newProduct({ ctx }) {
 
   // 还需要配置 id和 product_id
   product.id = new Uuid().uuid
-  product.created_date = new Date().getTime()
-  product.updated_date = new Date().getTime()
+  product.createdDate = new Date()
+  // product.updated_date = new Date().getTime()
 
   /** 函数会返回两个值, 一个是带 null值, 一个是去除 null值. */
 

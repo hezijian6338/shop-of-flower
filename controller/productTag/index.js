@@ -71,17 +71,12 @@ async function delProductTag(ctx) {
 }
 
 async function getTagList(ctx) {
-  const result = service.getTagList()
+  const result = await service.getTagList()
 
   // 回应体抽离对象实现
   const body = new Response()
-
-  if (result) {
-    body.SUCCESS = 200
-    body.DATA = result
-  } else {
-    body.FAIL = 500
-  }
+  body.SUCCESS = 200
+  body.DATA = result
 
   // 返回信息到回应体
   ctx.body = body.getData()

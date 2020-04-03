@@ -37,8 +37,9 @@ async function newUser(ctx) {
   // console.log(result);
 
   const response = new Response()
-  if (result) {
+  if (result.result) {
     response.SUCCESS = 200
+    response.DATA = result
   }
 
   ctx.body = response.getData()

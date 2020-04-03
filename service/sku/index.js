@@ -11,8 +11,8 @@ async function newSku({ ctx }) {
   const sku = new Sku(newSkuInfo)
 
   sku.id = new Uuid().uuid
-  sku.created_date = new Date().getTime()
-  sku.updated_date = new Date().getTime()
+  // sku.updatedDate = new Date().getTime()
+  sku.createdDate = new Date()
 
   const result = await mysql('sku').insert(sku.getData().sku)
 
