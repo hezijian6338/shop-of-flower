@@ -1,15 +1,15 @@
 class Order {
   constructor({
     id,
-    productId,
+    product_id: productId,
     name,
-    skuId,
+    sku_id: skuId,
     standard,
     price,
     photo,
     state,
-    createdDate,
-    updatedDate,
+    created_date: createdDate,
+    updated_date: updatedDate,
   }) {
     this.order = {
       id: String,

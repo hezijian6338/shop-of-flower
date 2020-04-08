@@ -1,6 +1,7 @@
 class Sku {
   constructor({
-    id, standard, price, photo, createdDate, updatedDate,
+    id, standard, price, photo, created_date: createdDate,
+    updated_date: updatedDate,
   }) {
     this.sku = {
       id: String,

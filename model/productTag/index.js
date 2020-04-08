@@ -1,6 +1,7 @@
 class ProductTag {
   constructor({
-    id, tagName, productId, createdDate, updatedDate,
+    id, tag_name: tagName, product_id: productId, created_date: createdDate,
+    updated_date: updatedDate,
   }) {
     this.productTag = {
       id: String,

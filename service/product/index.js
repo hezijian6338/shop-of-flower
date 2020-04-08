@@ -75,13 +75,13 @@ async function setProduct({ ctx, id }) {
   // product.sku_ids = Reflect.get(update_product_info, "sku_ids");
   // product.photo = Reflect.get(update_product_info, "photo");
 
-  product.updated_date = new Date().getTime()
+  // product.updatedDate = new Date().getTime()
 
   // 执行更新语句...
   const result = await mysql('product')
     .where({ product_id: id })
     // 这里使用没有 null值的对象, 因为这样可以定向更新数据
-    .update(product.getData().product_with_no_null)
+    .update(product.getData().productWithNoNull)
 
   return result === 1
 }

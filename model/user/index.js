@@ -5,10 +5,10 @@ class User {
     password,
     name,
     role,
-    orderIds,
-    cartIds,
-    createdDate,
-    updatedDate,
+    order_ids: orderIds,
+    cart_ids: cartIds,
+    created_date: createdDate,
+    updated_date: updatedDate,
   }) {
     this.user = {
       id: String,

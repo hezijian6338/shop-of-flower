@@ -1,14 +1,14 @@
 class Cart {
   constructor({
     id,
-    productId,
+    product_id: productId,
     name,
     skuId,
     standard,
     price,
     photo,
-    createdDate,
-    updatedDate,
+    created_date: createdDate,
+    updated_date: updatedDate,
   }) {
     this.cart = {
       id: String,

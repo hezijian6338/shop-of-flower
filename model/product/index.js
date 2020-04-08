@@ -2,14 +2,14 @@
 class Product {
   constructor({
     id,
-    productId,
+    product_id: productId,
     name,
     brief,
     content,
-    skuIds,
+    sku_ids: skuIds,
     photo,
-    createdDate,
-    updatedDate,
+    created_date: createdDate,
+    updated_date: updatedDate,
   }) {
     this.product = {
       id: String,

@@ -6,8 +6,9 @@ async function newSku(ctx) {
 
   const res = new Response()
 
-  if (result) {
+  if (result.result) {
     res.SUCCESS = 200
+    res.DATA = result
   } else {
     res.FAIL = 500
   }
