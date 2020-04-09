@@ -6,14 +6,20 @@ async function newOrder(ctx) {
 
   const result = await service.newOrder({ ctx })
 
-  const response = new Response()
-  if (result) {
-    response.SUCCESS = 200
+  // 回应体抽离对象实现
+  const body = new Response()
+
+  if (result.result) {
+    // 配置成功与否和代码参数
+    body.SUCCESS = 200
+    // 配置返回内容体
+    body.DATA = result
   } else {
-    response.FAIL = 500
+    body.FAIL = 500
   }
 
-  ctx.body = response.getData()
+  // 返回信息到回应体
+  ctx.body = body.getData()
 }
 
 async function getOrder(ctx) {

@@ -6,8 +6,7 @@ const { getSku } = require('../sku')
 const { getUser } = require('../user')
 
 async function newOrder({ ctx }) {
-  let newOrderInfo = {}
-  newOrderInfo = ctx.request.body
+  const newOrderInfo = ctx.request.body
 
   const order = new Order(newOrderInfo)
   order.id = new Uuid().uuid
@@ -18,13 +17,17 @@ async function newOrder({ ctx }) {
   const { productId } = order
   const { skuId } = order
 
+  console.log(productId)
+
   const { productWithNoNull } = await getProduct({ id: productId })
+
   order.name = productWithNoNull.name
 
   const { skuWithNoNull } = await getSku({ id: skuId })
   order.standard = skuWithNoNull.standard
   order.price = skuWithNoNull.price
   order.photo = skuWithNoNull.photo
+  order.state = 0
 
   const result = await mysql('order').insert(order.getData().order)
 
