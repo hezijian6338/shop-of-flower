@@ -17,8 +17,6 @@ async function newOrder({ ctx }) {
   const { productId } = order
   const { skuId } = order
 
-  console.log(productId)
-
   const { productWithNoNull } = await getProduct({ id: productId })
 
   order.name = productWithNoNull.name

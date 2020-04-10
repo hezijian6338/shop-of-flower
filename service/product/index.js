@@ -99,7 +99,7 @@ async function delProduct({ id }) {
 async function getProducts() {
   const result = await mysql('product').select()
 
-  const products = Array
+  const products = []
   result.forEach((product) => {
     products.push(product)
   })

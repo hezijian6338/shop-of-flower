@@ -67,6 +67,8 @@ async function getProductListByTagName({ tagName }) {
 
   const result = await mysql('product_tag').where({ tag_name: tagName }).select()
 
+  console.log(result)
+
   tagList = result
 
   return tagList

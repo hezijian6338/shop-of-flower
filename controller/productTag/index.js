@@ -85,7 +85,7 @@ async function getTagList(ctx) {
 async function getProductListByTagName(ctx) {
   const { tagName } = ctx.params
 
-  const result = service.getProductListByTagName({ tagName })
+  const result = await service.getProductListByTagName({ tagName })
 
   // 回应体抽离对象实现
   const body = new Response()
