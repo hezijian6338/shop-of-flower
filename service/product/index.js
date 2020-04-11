@@ -1,6 +1,8 @@
+/* eslint-disable no-restricted-syntax */
 const { mysql } = require('../../database/mysql')
 const Product = require('../../model/product')
 const Uuid = require('../../utils/uuid')
+const SkuService = require('../sku')
 
 async function newProduct({ ctx }) {
   // 实体类字段控制
@@ -100,9 +102,33 @@ async function getProducts() {
   const result = await mysql('product').select()
 
   const products = []
-  result.forEach((product) => {
-    products.push(product)
-  })
+
+  for (const product of result) {
+    const skuIds = product.sku_ids.split(',')
+
+    const productWithPirce = new Map()
+
+    // 自身属性复制一个数组中
+    const propertys = Object.getOwnPropertyNames(product)
+
+    // 遍历数组内容, 对新复制的数组中为 null值得进行剔除... 返回一个无空值的结果对象
+    propertys.forEach((property) => {
+      Reflect.set(productWithPirce, property, Reflect.get(product, property))
+    })
+
+    let skuWithNoNull = {}
+
+    // eslint-disable-next-line no-await-in-loop
+    await SkuService.getSku({ id: skuIds[0] }).then((sku) => {
+      skuWithNoNull = sku.skuWithNoNull
+
+      // console.log(skuWithNoNull)
+
+      Reflect.set(productWithPirce, 'price', skuWithNoNull.price)
+      products.push(productWithPirce)
+    })
+    // console.log(productWithPirce)
+  }
 
   return products
 }
