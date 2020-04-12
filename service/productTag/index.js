@@ -1,6 +1,7 @@
 const { mysql } = require('../../database/mysql')
 const ProductTag = require('../../model/productTag')
 const Uuid = require('../../utils/uuid')
+const ProductService = require('../product')
 
 async function newProductTag({ ctx }) {
   let newProductTagInfo = {}
@@ -63,13 +64,16 @@ async function getTagList() {
 
 // TODO: 根据 tag_name返回 tag信息列表 (包括 product_id)
 async function getProductListByTagName({ tagName }) {
-  let tagList = Array
+  const tagList = []
 
   const result = await mysql('product_tag').where({ tag_name: tagName }).select()
 
-  console.log(result)
-
-  tagList = result
+  // eslint-disable-next-line no-restricted-syntax
+  for (const tag of result) {
+    // eslint-disable-next-line no-await-in-loop
+    const { product } = await ProductService.getProduct({ id: tag.product_id })
+    tagList.push(product)
+  }
 
   return tagList
 }
