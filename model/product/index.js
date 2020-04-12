@@ -6,6 +6,7 @@ class Product {
     name,
     brief,
     content,
+    price,
     sku_ids: skuIds,
     photo,
     created_date: createdDate,
@@ -17,6 +18,7 @@ class Product {
       name: String,
       brief: String,
       content: String,
+      price: Number,
       sku_ids: String,
       photo: String,
       created_date: Number,
@@ -27,6 +29,7 @@ class Product {
     this.product.name = name
     this.product.brief = brief
     this.product.content = content
+    this.product.price = price
     this.product.sku_ids = skuIds
     this.product.photo = photo
     this.product.created_date = createdDate
@@ -102,6 +105,14 @@ class Product {
 
   set content(value) {
     this.product.content = value
+  }
+
+  get price() {
+    return this.product.price === undefined ? null : this.product.price
+  }
+
+  set price(value) {
+    this.product.price = value
   }
 
   get skuIds() {

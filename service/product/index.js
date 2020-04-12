@@ -79,6 +79,15 @@ async function setProduct({ ctx, id }) {
 
   // product.updatedDate = new Date().getTime()
 
+  // TODO: 添加新判断, price是否为空
+  if (product.price === null) {
+    if (product.skuIds !== null) {
+      const [skuId] = product.skuIds.split(',')
+      const { sku } = await SkuService.getSku({ id: skuId })
+      product.price = sku.price
+    }
+  }
+
   // 执行更新语句...
   const result = await mysql('product')
     .where({ product_id: id })
@@ -103,32 +112,36 @@ async function getProducts() {
 
   const products = []
 
-  for (const product of result) {
-    const skuIds = product.sku_ids.split(',')
+  // for (const product of result) {
+  //   const skuIds = product.sku_ids.split(',')
 
-    const productWithPirce = new Map()
+  //   const productWithPirce = new Map()
 
-    // 自身属性复制一个数组中
-    const propertys = Object.getOwnPropertyNames(product)
+  //   // 自身属性复制一个数组中
+  //   const propertys = Object.getOwnPropertyNames(product)
 
-    // 遍历数组内容, 对新复制的数组中为 null值得进行剔除... 返回一个无空值的结果对象
-    propertys.forEach((property) => {
-      Reflect.set(productWithPirce, property, Reflect.get(product, property))
-    })
+  //   // 遍历数组内容, 对新复制的数组中为 null值得进行剔除... 返回一个无空值的结果对象
+  //   propertys.forEach((property) => {
+  //     Reflect.set(productWithPirce, property, Reflect.get(product, property))
+  //   })
 
-    let skuWithNoNull = {}
+  //   let skuWithNoNull = {}
 
-    // eslint-disable-next-line no-await-in-loop
-    await SkuService.getSku({ id: skuIds[0] }).then((sku) => {
-      skuWithNoNull = sku.skuWithNoNull
+  //   // eslint-disable-next-line no-await-in-loop
+  //   await SkuService.getSku({ id: skuIds[0] }).then((sku) => {
+  //     skuWithNoNull = sku.skuWithNoNull
 
-      // console.log(skuWithNoNull)
+  //     // console.log(skuWithNoNull)
 
-      Reflect.set(productWithPirce, 'price', skuWithNoNull.price)
-      products.push(productWithPirce)
-    })
-    // console.log(productWithPirce)
-  }
+  //     Reflect.set(productWithPirce, 'price', skuWithNoNull.price)
+  //     products.push(productWithPirce)
+  //   })
+  //   // console.log(productWithPirce)
+  // }
+
+  result.forEach((product) => {
+    products.push(product)
+  })
 
   return products
 }
