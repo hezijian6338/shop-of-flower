@@ -1,6 +1,8 @@
 const Koa = require('koa') // koa v2
 const koajwt = require('koa-jwt')
-// const jwt = require('jwt-simple')
+
+// 跨域组件
+const cors = require('koa2-cors')
 
 // 加载一个中间件
 const bodyParser = require('koa-bodyparser')
@@ -11,7 +13,9 @@ const router = require('./routers')
 // 实例化 Koa
 const app = new Koa()
 
-const cors = require('koa2-cors')
+// 加载中间件
+app.use(loggerAsync())
+app.use(bodyParser())
 
 // 具体参数我们在后面进行解释
 app.use(cors({
@@ -27,10 +31,6 @@ app.use(cors({
   allowMethods: ['GET', 'POST', 'DELETE', 'PUT'],
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
-
-// 加载中间件
-app.use(loggerAsync())
-app.use(bodyParser())
 
 // 秘钥
 const jwtSecret = 'jwtSecret'
