@@ -1,12 +1,27 @@
 /* eslint-disable no-console */
 /* eslint-disable func-names */
+const verify = require('../utils/verify')
+
+const jwtSecret = 'jwtSecret'
+
 function log(ctx) {
   console.log(ctx.method, ctx.header.host + ctx.url)
 }
 
 module.exports = function () {
   return async function (ctx, next) {
-    log(ctx)
-    await next()
+    if (ctx.url !== '/login') {
+      const { authorization } = ctx.header
+
+      const username = await verify(authorization.split(',')[0].split(' ')[1], jwtSecret)
+      // console.log(username)
+      // console.log(Reflect.deleteProperty(ctx.request.header, 'authorization'))
+      // console.log(ctx)
+      ctx.body = { phone: username }
+      await next()
+    } else {
+      log(ctx)
+      await next()
+    }
   }
 }

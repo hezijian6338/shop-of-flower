@@ -13,6 +13,11 @@ async function login({ phone, password }) {
     })
     .select('password')
 
+  // console.log(Reflect.has(originPassword[0], 'password'))
+  if (!Reflect.has(originPassword[0], 'password')) {
+    return false
+  }
+
   return new Crypto(password).hash === originPassword[0].password
 }
 

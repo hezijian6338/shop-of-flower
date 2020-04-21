@@ -8,6 +8,9 @@ const productTag = require('../controller/productTag')
 
 // 路由中间件
 
+// const exp = new Router()
+
+
 // 首页路由
 const index = new Router()
 // index.get('/index', async (ctx) => { });
@@ -20,7 +23,7 @@ rUser.get('/user/phone/:phone', user.getUserByPhone)
 // user = { all }
 rUser.post('/user', user.newUser)
 // user = { phone: phone, password: password}
-rUser.post('/user/login', user.login)
+rUser.post('/login', user.login)
 // user = { all }
 rUser.put('/user/:id', user.setUser)
 rUser.del('/user/:id', user.delUser)
