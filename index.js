@@ -11,6 +11,23 @@ const router = require('./routers')
 // 实例化 Koa
 const app = new Koa()
 
+const cors = require('koa2-cors')
+
+// 具体参数我们在后面进行解释
+app.use(cors({
+  origin() {
+    // if (ctx.url === '/test') {
+    return '*' // 允许来自所有域名请求
+    // }
+    // return 'http://localhost:8080';
+  },
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+  maxAge: 5,
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'DELETE', 'PUT'],
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}))
+
 // 加载中间件
 app.use(loggerAsync())
 app.use(bodyParser())
