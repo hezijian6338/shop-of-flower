@@ -46,7 +46,7 @@ const jwtSecret = 'jwtSecret'
 // }))
 
 app.use(koajwt({ secret: jwtSecret }).unless({
-  path: [/^\/login/],
+  path: [/^\/login/, /^\/product/, /^\/tag/, /^\/sku/],
 }))
 
 

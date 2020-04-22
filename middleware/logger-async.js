@@ -10,7 +10,7 @@ function log(ctx) {
 
 module.exports = function () {
   return async function (ctx, next) {
-    if (ctx.url !== '/login') {
+    if (!ctx.url.includes('/login') && !ctx.url.includes('/tag') && !ctx.url.includes('/product') && !ctx.url.includes('/sku')) {
       const { authorization } = ctx.header
 
       const username = await verify(authorization.split(',')[0].split(' ')[1], jwtSecret)
