@@ -10,13 +10,14 @@ function log(ctx) {
 
 module.exports = function () {
   return async function (ctx, next) {
+    // console.log(ctx.url)
     if (!ctx.url.includes('/login') && !ctx.url.includes('/tag') && !ctx.url.includes('/product') && !ctx.url.includes('/sku')) {
       const { authorization } = ctx.header
-
+      console.log(authorization)
       const username = await verify(authorization.split(',')[0].split(' ')[1], jwtSecret)
       // console.log(username)
       // console.log(Reflect.deleteProperty(ctx.request.header, 'authorization'))
-      // console.log(ctx)
+
       ctx.body = { phone: username }
       await next()
     } else {

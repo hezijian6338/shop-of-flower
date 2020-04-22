@@ -12,11 +12,13 @@ async function login(ctx) {
 
   const token = `Bearer ${jwt.sign(phone, jwtSecret)}` // token签名 有效期为1小时
 
+  const { user } = await service.getUserByPhone({ phone })
+
   const response = new Response()
 
   if (result) {
     response.SUCCESS = 200
-    response.DATA = { token }
+    response.DATA = { token, user }
   } else {
     response.FAIL = 500
     response.DATA = '密码错误'
