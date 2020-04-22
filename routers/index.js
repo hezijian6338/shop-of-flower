@@ -61,7 +61,9 @@ rSku.delete('/sku/:id', sku.delSku)
 // 订单操作路由
 const rOrder = new Router()
 // 订单列表
-rOrder.get('/order/list/user/:userId', order.getOrders)
+rOrder.get('/order/list/user/:userId', order.getOrdersByUser)
+// 订单列表
+rOrder.get('/order/list', order.getOrders)
 // 订单查询
 rOrder.get('/order/:id', order.getOrder)
 rOrder.put('/order/:id', order.setOrder)

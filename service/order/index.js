@@ -44,7 +44,7 @@ async function getOrder({ id }) {
   return order.getData()
 }
 
-async function getOrders({ userId }) {
+async function getOrdersByUser({ userId }) {
   // TODO: 查询用户信息, 得出用户的订单列表
   const { user } = getUser(userId)
   // 取订单列表为数组
@@ -52,9 +52,14 @@ async function getOrders({ userId }) {
 
   // TODO: 构建订单列表详细信息
   const orders = Array
-  await orderIds.array.forEach((orderId) => {
+  // await orderIds.array.forEach((orderId) => {
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const orderId of orderIds) {
     // 一个一个订单 id查询
-    const orderInfo = mysql('order')
+
+    // eslint-disable-next-line no-await-in-loop
+    const orderInfo = await mysql('order')
       .where({
         id: orderId,
       })
@@ -62,6 +67,17 @@ async function getOrders({ userId }) {
 
     // 插入数组列表中
     orders.push(orderInfo[0])
+  }
+  // })
+  return orders
+}
+
+async function getOrders() {
+  const result = await mysql('order').select()
+  const orders = Array
+
+  result.forEach((order) => {
+    orders.push(order)
   })
 
   return orders
@@ -111,5 +127,5 @@ async function delOrder({ id }) {
 }
 
 module.exports = {
-  newOrder, getOrder, getOrders, setOrder, delOrder,
+  newOrder, getOrder, getOrders, getOrdersByUser, setOrder, delOrder,
 }
