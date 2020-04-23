@@ -73,13 +73,18 @@ async function setUser({ ctx, id }) {
   updateUserInfo = ctx.request.body
 
   const user = new User(updateUserInfo)
-  user.updated_date = new Date().getTime()
+  // user.updated_date = new Date().getTime()
+
+  const updateInfo = user.getData().userWithNoNull
+
+  Reflect.deleteProperty(updateInfo, 'created_date')
+  Reflect.deleteProperty(updateInfo, 'updated_date')
 
   const result = await mysql('user')
     .where({
       id,
     })
-    .update(user.getData().user_with_no_null)
+    .update(updateInfo)
 
   return result === 1
 }

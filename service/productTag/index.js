@@ -34,9 +34,14 @@ async function setProductTag({ ctx, id }) {
 
   const productTag = new ProductTag(updateProductTagInfo)
 
-  productTag.update_date = Date.now()
+  // productTag.update_date = Date.now()
 
-  const result = await mysql('product_tag').where({ id }).update(productTag.getData().productTagWithNoNull)
+  const updateInfo = productTag.getData().productTagWithNoNull
+
+  Reflect.deleteProperty(updateInfo, 'created_date')
+  Reflect.deleteProperty(updateInfo, 'updated_date')
+
+  const result = await mysql('product_tag').where({ id }).update(updateInfo)
 
   return result === 1
 }

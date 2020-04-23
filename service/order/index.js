@@ -111,7 +111,7 @@ async function setOrder({ ctx, id }) {
     .where({
       id,
     })
-    .update(order.getData().order_with_no_null)
+    .update(order.getData().orderWithNoNull)
 
   return result === 1
 }

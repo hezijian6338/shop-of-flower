@@ -96,7 +96,7 @@ async function setCart({ ctx, id }) {
     .where({
       id,
     })
-    .update(cart.getData().cart_with_no_null)
+    .update(cart.getData().cartWithNoNull)
 
   return result === 1
 }

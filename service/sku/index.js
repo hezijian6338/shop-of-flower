@@ -39,13 +39,21 @@ async function setSku({ ctx, id }) {
   updateSkuInfo = ctx.request.body
 
   const sku = new Sku(updateSkuInfo)
-  sku.updated_date = new Date().getTime()
+  sku.updatedDate = new Date().getTime()
 
-  await mysql('sku')
+
+  const updateInfo = sku.getData().skuWithNoNull
+
+  Reflect.deleteProperty(updateInfo, 'created_date')
+  Reflect.deleteProperty(updateInfo, 'updated_date')
+
+  const result = await mysql('sku')
     .where({
       id,
     })
-    .update(sku.getData().sku_with_no_null)
+    .update(updateInfo)
+
+  return result === 1
 }
 
 async function delSku({ id }) {
