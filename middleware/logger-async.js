@@ -13,9 +13,9 @@ module.exports = function () {
     // console.log(ctx.url)
     if (!ctx.url.includes('/login') && !ctx.url.includes('/tag') && !ctx.url.includes('/product') && !ctx.url.includes('/sku')) {
       const { authorization } = ctx.header
-      console.log(authorization)
+      // console.log(authorization)
       const username = await verify(authorization.split(',')[0].split(' ')[1], jwtSecret)
-      // console.log(username)
+      console.log(username)
       // console.log(Reflect.deleteProperty(ctx.request.header, 'authorization'))
 
       ctx.body = { phone: username }

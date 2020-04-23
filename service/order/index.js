@@ -51,7 +51,7 @@ async function getOrdersByUser({ userId }) {
   const orderIds = user.order_ids().split(',')
 
   // TODO: 构建订单列表详细信息
-  const orders = Array
+  const orders = []
   // await orderIds.array.forEach((orderId) => {
 
   // eslint-disable-next-line no-restricted-syntax
@@ -74,7 +74,7 @@ async function getOrdersByUser({ userId }) {
 
 async function getOrders() {
   const result = await mysql('order').select()
-  const orders = Array
+  const orders = []
 
   result.forEach((order) => {
     orders.push(order)
@@ -107,11 +107,16 @@ async function setOrder({ ctx, id }) {
     order.photo = skuWithNoNull.photo
   }
 
+  const updateInfo = order.getData().orderWithNoNull
+
+  Reflect.deleteProperty(updateInfo, 'created_date')
+  Reflect.deleteProperty(updateInfo, 'updated_date')
+
   const result = await mysql('order')
     .where({
       id,
     })
-    .update(order.getData().orderWithNoNull)
+    .update(updateInfo)
 
   return result === 1
 }

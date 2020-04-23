@@ -64,6 +64,7 @@ async function setOrder(ctx) {
   const response = new Response()
   if (result) {
     response.SUCCESS = 200
+    response.DATA = result
   } else {
     response.FAIL = 500
   }
