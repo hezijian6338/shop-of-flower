@@ -7,6 +7,8 @@ const cors = require('koa2-cors')
 // 加载一个中间件
 const bodyParser = require('koa-bodyparser')
 const loggerAsync = require('./middleware/logger-async')
+const catchAsync = require('./middleware/catch-async')
+
 // 请求中 body的解析中间件
 // 加载路由中间件
 const router = require('./routers')
@@ -49,6 +51,7 @@ app.use(koajwt({ secret: jwtSecret }).unless({
   path: [/^\/login/, /^\/product/, /^\/tag/, /^\/sku/],
 }))
 
+app.use(catchAsync())
 
 // 把对应的路由添加
 app.use(router.index.routes(), router.index.allowedMethods())

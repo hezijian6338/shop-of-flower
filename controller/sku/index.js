@@ -19,9 +19,6 @@ async function newSku(ctx) {
 async function getSku(ctx) {
   const { id } = ctx.params
 
-  console.log(id)
-
-
   const { sku } = await service.getSku({ ctx, id })
 
   const res = new Response()
