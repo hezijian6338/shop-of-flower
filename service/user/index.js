@@ -59,11 +59,17 @@ async function newUser({ ctx }) {
 }
 
 async function getUser({ id }) {
-  const userInfo = await mysql('user')
+  // console.log(id)
+
+  const [userInfo] = await mysql('user')
     .where({ id })
     .select()
 
-  const user = new User(userInfo[0])
+  // console.log(userInfo)
+
+  const user = new User(userInfo)
+
+  // console.log(user)
 
   return user.getData()
 }

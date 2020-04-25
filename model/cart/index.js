@@ -3,7 +3,7 @@ class Cart {
     id,
     product_id: productId,
     name,
-    skuId,
+    sku_id: skuId,
     standard,
     price,
     photo,

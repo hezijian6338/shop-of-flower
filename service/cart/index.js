@@ -12,7 +12,9 @@ async function newCart({ ctx }) {
   const cart = new Cart(newCartInfo)
   cart.id = new Uuid().uuid
   cart.createdDate = new Date()
-  // cart.updated_date = new Date().getTime()
+
+  cart.createdDate = new Date()
+  cart.updatedDate = new Date()
 
   // TODO: 关联查询信息, 再进行信息添加 (用代码组合而非查询语句组合, 简单快捷...)
   const { productId } = cart
@@ -46,9 +48,16 @@ async function getCart({ id }) {
 // TODO: 根据用户查询该用户的购物车列表
 async function getCarts({ userId }) {
   // TODO: 查询用户信息, 得出用户的购物车列表
-  const { user } = getUser(userId)
+  const { user } = await getUser({ id: userId })
+
+  // console.log(user)
+
+  if (user.cart_ids === null || user.cart_ids === undefined) {
+    return null
+  }
+
   // 取订单列表为数组
-  const cartIds = user.cart_ids().split(',')
+  const cartIds = user.cart_ids.split(',')
 
   // TODO: 构建购物车列表详细信息
   const carts = Array

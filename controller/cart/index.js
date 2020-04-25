@@ -6,8 +6,9 @@ class CartController {
     const result = await service.newCart({ ctx })
 
     const response = new Response()
-    if (result) {
+    if (result.result) {
       response.SUCCESS = 200
+      response.DATA = result
     } else {
       response.FAIL = 500
     }
