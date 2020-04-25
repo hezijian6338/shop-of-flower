@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 const { mysql } = require('../../database/mysql')
 const Cart = require('../../model/cart')
 const Uuid = require('../../utils/uuid')
@@ -50,10 +51,20 @@ async function getCarts({ userId }) {
   // TODO: 查询用户信息, 得出用户的购物车列表
   const { user } = await getUser({ id: userId })
 
-  // console.log(user)
-
+  // 检查是否为空
   if (user.cart_ids === null || user.cart_ids === undefined) {
     return null
+  }
+
+  if (!user.cart_ids.includes(',')) {
+    const { cart_ids: cartId } = user
+    const [cartInfo] = await mysql('cart')
+      .where({
+        id: cartId,
+      })
+      .select()
+
+    return cartInfo
   }
 
   // 取订单列表为数组
@@ -61,17 +72,19 @@ async function getCarts({ userId }) {
 
   // TODO: 构建购物车列表详细信息
   const carts = Array
-  await cartIds.array.forEach((cartId) => {
+
+  for (const cartId of cartIds) {
     // 一个一个购物车 id查询
-    const cartInfo = mysql('cart')
+    // eslint-disable-next-line no-await-in-loop
+    const [cartInfo] = await mysql('cart')
       .where({
         id: cartId,
       })
       .select()
 
     // 插入数组列表中
-    carts.push(cartInfo[0])
-  })
+    carts.push(cartInfo)
+  }
 
   return carts
 }
