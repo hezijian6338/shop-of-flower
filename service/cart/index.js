@@ -57,21 +57,23 @@ async function getCarts({ userId }) {
   }
 
   if (!user.cart_ids.includes(',')) {
+    const carts = []
     const { cart_ids: cartId } = user
     const [cartInfo] = await mysql('cart')
       .where({
         id: cartId,
       })
       .select()
+    carts.push(cartInfo)
 
-    return cartInfo
+    return carts
   }
 
   // 取订单列表为数组
   const cartIds = user.cart_ids.split(',')
 
   // TODO: 构建购物车列表详细信息
-  const carts = Array
+  const carts = []
 
   for (const cartId of cartIds) {
     // 一个一个购物车 id查询
