@@ -20,11 +20,11 @@ const rUser = new Router()
 // 用户详细信息 (路径参数传递)
 rUser.get('/user/:id', user.getUser)
   .get('/user/phone/:phone', user.getUserByPhone)
-// user = { all }
+  // user = { all }
   .post('/user', user.newUser)
-// user = { phone: phone, password: password}
+  // user = { phone: phone, password: password}
   .post('/login', user.login)
-// user = { all }
+  // user = { all }
   .put('/user/:id', user.setUser)
   .del('/user/:id', user.delUser)
 
@@ -32,10 +32,10 @@ rUser.get('/user/:id', user.getUser)
 const rProduct = new Router()
 // 主页详情 (路径参数传递)
 rProduct.get('/product/list', product.getProducts)
-// 根据 id获取商品信息
+  // 根据 id获取商品信息
   .get('/product/:id', product.getProduct)
   .put('/product/:id', product.setProduct)
-// product = { all }
+  // product = { all }
   .post('/product', product.newProduct)
   .delete('/product/:id', product.delProduct)
 
@@ -43,10 +43,10 @@ rProduct.get('/product/list', product.getProducts)
 const rCart = new Router()
 // 根据用户信息查询购物车列表信息
 rCart.get('/cart/list/user/:userId', cart.getCarts)
-// 根据购物车 id查询信息
+  // 根据购物车 id查询信息
   .get('/cart/:id', cart.getCart)
   .put('/cart/:id', cart.setCart)
-// cart = { all }
+  // cart = { all }
   .post('/cart', cart.newCart)
   .delete('/cart/:id', cart.delCart)
 
@@ -54,7 +54,7 @@ rCart.get('/cart/list/user/:userId', cart.getCarts)
 const rSku = new Router()
 rSku.get('/sku/:id', sku.getSku)
   .put('/sku/:id', sku.setSku)
-// cart = { all }
+  // cart = { all }
   .post('/sku', sku.newSku)
   .delete('/sku/:id', sku.delSku)
 
@@ -63,25 +63,27 @@ const rOrder = new Router()
 // 订单列表
 rOrder
   .get('/order/list/user/:userId', order.getOrdersByUser)
-// 订单列表
+  // 订单 + 用户列表
+  .get('/order/with/user/list', order.getOrdersByUsers)
+  // 订单列表
   .get('/order/list', order.getOrders)
-// 订单查询
+  // 订单查询
   .get('/order/:id', order.getOrder)
   .put('/order/:id', order.setOrder)
-// order = { all }
+  // order = { all }
   .post('/order', order.newOrder)
   .delete('/order/:id', order.delOrder)
 
 const rProductTag = new Router()
-// 产品标签列表
+  // 产品标签列表
   .get('/tag/list', productTag.getTagList)
-// 根据标签名字查询产品列表
+  // 根据标签名字查询产品列表
   .get('/tag/:tagName/product', productTag.getProductListByTagName)
-// 添加产品标签
+  // 添加产品标签
   .post('/tag', productTag.newProductTag)
-// 编辑产品标签
+  // 编辑产品标签
   .put('/tag/:id', productTag.setProductTag)
-// 删除产品标签
+  // 删除产品标签
   .delete('/tag/:id', productTag.delProductTag)
 
 // 付款路由

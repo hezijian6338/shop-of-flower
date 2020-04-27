@@ -12,11 +12,6 @@ async function newProduct({ ctx }) {
 
   // 配置一个合法的数据库对象进行操作
   const product = new Product(newProductInfo)
-  // product.name = Reflect.get(new_product_info, "name");
-  // product.brief = Reflect.get(new_product_info, "brief");
-  // product.content = Reflect.get(new_product_info, "content");
-  // product.sku_ids = Reflect.get(new_product_info, "sku_ids");
-  // product.photo = Reflect.get(new_product_info, "photo");
 
   // 还需要配置 id和 product_id
   product.id = new Uuid().uuid
@@ -69,13 +64,6 @@ async function setProduct({ ctx, id }) {
 
   // 配置一个合法的对象给数据库进行操作
   const product = new Product(updateProductInfo)
-  // product.id = Reflect.get(update_product_info, "id");
-  // product.product_id = Reflect.get(update_product_info, "product_id");
-  // product.name = Reflect.get(update_product_info, "name");
-  // product.brief = Reflect.get(update_product_info, "brief");
-  // product.content = Reflect.get(update_product_info, "content");
-  // product.sku_ids = Reflect.get(update_product_info, "sku_ids");
-  // product.photo = Reflect.get(update_product_info, "photo");
 
   // product.updatedDate = new Date().getTime()
 

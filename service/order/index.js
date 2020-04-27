@@ -3,7 +3,7 @@ const Order = require('../../model/order')
 const Uuid = require('../../utils/uuid')
 const { getProduct } = require('../product')
 const { getSku } = require('../sku')
-const { getUser } = require('../user')
+const UserService = require('../user')
 
 async function newOrder({ ctx }) {
   const newOrderInfo = ctx.request.body
@@ -46,9 +46,14 @@ async function getOrder({ id }) {
 
 async function getOrdersByUser({ userId }) {
   // TODO: 查询用户信息, 得出用户的订单列表
-  const { user } = getUser(userId)
+  const { user } = await UserService.getUser({ id: userId })
+
+  if (user.order_ids === null || user.cart_ids === undefined) {
+    return null
+  }
+
   // 取订单列表为数组
-  const orderIds = user.order_ids().split(',')
+  const orderIds = user.order_ids.split(',')
 
   // TODO: 构建订单列表详细信息
   const orders = []
@@ -69,6 +74,25 @@ async function getOrdersByUser({ userId }) {
     orders.push(orderInfo[0])
   }
   // })
+  return orders
+}
+
+async function getOrdersByUsers() {
+  const orders = []
+  const users = await UserService.getUsers()
+  // eslint-disable-next-line no-restricted-syntax
+  for (const user of users) {
+    // eslint-disable-next-line no-await-in-loop
+    const userOrders = await getOrdersByUser({ userId: user.id })
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const order of userOrders) {
+      Reflect.set(order, 'user', user)
+    }
+
+    orders.push(userOrders)
+  }
+
   return orders
 }
 
@@ -132,5 +156,5 @@ async function delOrder({ id }) {
 }
 
 module.exports = {
-  newOrder, getOrder, getOrders, getOrdersByUser, setOrder, delOrder,
+  newOrder, getOrder, getOrders, getOrdersByUser, setOrder, delOrder, getOrdersByUsers,
 }

@@ -46,6 +46,16 @@ async function getOrdersByUser(ctx) {
   ctx.body = response.getData()
 }
 
+async function getOrdersByUsers(ctx) {
+  const ordersWithUser = await service.getOrdersByUsers()
+
+  const response = new Response()
+  response.SUCCESS = 200
+  response.DATA = ordersWithUser
+
+  ctx.body = response.getData()
+}
+
 async function getOrders(ctx) {
   const orders = await service.getOrders()
 
@@ -88,5 +98,5 @@ async function delOrder(ctx) {
 }
 
 module.exports = {
-  newOrder, getOrder, getOrders, getOrdersByUser, setOrder, delOrder,
+  newOrder, getOrder, getOrders, getOrdersByUser, setOrder, delOrder, getOrdersByUsers,
 }
