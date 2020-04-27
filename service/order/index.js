@@ -78,7 +78,7 @@ async function getOrdersByUser({ userId }) {
 }
 
 async function getOrdersByUsers() {
-  const orders = []
+  let orders = []
   const users = await UserService.getUsers()
   // eslint-disable-next-line no-restricted-syntax
   for (const user of users) {
@@ -90,7 +90,7 @@ async function getOrdersByUsers() {
       Reflect.set(order, 'user', user)
     }
 
-    orders.push(userOrders)
+    orders = orders.concat(userOrders)
   }
 
   return orders
