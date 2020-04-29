@@ -5,6 +5,7 @@ class User {
     password,
     name,
     role,
+    avatar,
     order_ids: orderIds,
     cart_ids: cartIds,
     created_date: createdDate,
@@ -16,6 +17,7 @@ class User {
       password: String,
       name: String,
       role: Number,
+      avatar: String,
       order_ids: String,
       cart_ids: String,
       created_date: Number,
@@ -26,6 +28,7 @@ class User {
     this.user.password = password
     this.user.name = name
     this.user.role = role
+    this.user.avatar = avatar
     this.user.order_ids = orderIds
     this.user.cart_ids = cartIds
     this.user.created_date = createdDate
@@ -77,6 +80,14 @@ class User {
 
   set role(value) {
     this.user.role = value
+  }
+
+  get avatar() {
+    return this.user.avatar === undefined ? null : this.user.avatar
+  }
+
+  set avatar(value) {
+    this.user.avatar = value
   }
 
   get orderIds() {
