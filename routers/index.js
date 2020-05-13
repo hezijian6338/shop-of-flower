@@ -8,17 +8,16 @@ const productTag = require('../controller/productTag')
 
 // 路由中间件
 
-// const exp = new Router()
-
-
 // 首页路由
 const index = new Router()
 // index.get('/index', async (ctx) => { });
 
-// 个人信息页面路由
+// TODO: 个人信息页面路由
 const rUser = new Router()
 // 用户详细信息 (路径参数传递)
+// 根据用户 id获取信息
 rUser.get('/user/:id', user.getUser)
+  // 根据用户的 phone获取信息
   .get('/user/phone/:phone', user.getUserByPhone)
   // user = { all }
   .post('/user', user.newUser)
