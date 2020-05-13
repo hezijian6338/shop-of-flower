@@ -64,7 +64,11 @@ async function getCarts({ userId }) {
         id: cartId,
       })
       .select()
-    carts.push(cartInfo)
+
+    // TODO: 添加容错机制: 查询数据不存在不进行展示
+    if (cartInfo !== undefined) {
+      carts.push(cartInfo)
+    }
 
     return carts
   }
@@ -84,8 +88,13 @@ async function getCarts({ userId }) {
       })
       .select()
 
+    // console.log(cartInfo)
+
+    // TODO: 添加容错机制: 查询数据不存在不进行展示
+    if (cartInfo !== undefined) {
     // 插入数组列表中
-    carts.push(cartInfo)
+      carts.push(cartInfo)
+    }
   }
 
   return carts

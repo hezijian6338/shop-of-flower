@@ -37,6 +37,8 @@ class CartController {
     response.SUCCESS = 200
     response.DATA = carts
 
+    // console.log(carts)
+
     ctx.body = response.getData()
   }
 
